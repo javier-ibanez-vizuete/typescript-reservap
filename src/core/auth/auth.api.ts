@@ -1,5 +1,5 @@
-import type { Login, LogoutResponse, Register, User, UserResponse } from "../../types/auth.type";
 import { api } from "../http/axios";
+import type { Login, LogoutResponse, Register, User, UserResponse } from "./auth.type";
 
 export const registerApi = async (newUserData: Register): Promise<UserResponse> => {
     try {

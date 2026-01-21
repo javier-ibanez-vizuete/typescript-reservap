@@ -15,7 +15,12 @@ export function App() {
         <Routes>
             <Route element={<UserLayout />}>
                 <Route index element={<HomePage />} />
+                <Route path="menu" element={<h3>PAGINA MENU</h3>} />
+
                 <Route element={<PrivateRoute />}>
+                    <Route path="/orders" element={<h3>PAGINA PEDIDOS</h3>} />
+                    <Route path="/cart" element={<h3>PAGINA CARRITO</h3>} />
+                    <Route path="/bookings" element={<h3>PAGINA RESERVAS</h3>} />
                     <Route path="profile" element={<h1>RUTA PRIVADA USUARIO</h1>} />
                 </Route>
             </Route>

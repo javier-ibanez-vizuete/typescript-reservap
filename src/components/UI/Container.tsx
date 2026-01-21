@@ -1,12 +1,20 @@
 import classNames from "classnames";
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { useDevice } from "../../hooks/useDevice";
-import type { ContainerProps } from "../../types/props.type";
+import type { SizeType } from "../../types/index.type";
+
+export type ContainerProps = {
+    children: ReactNode;
+    direction?: "col" | "row";
+    padding?: SizeType;
+    width?: SizeType | "default";
+    className?: string;
+};
+
+const base = "flex flex-1 xl:mx-auto";
 
 export function Container({ children, direction, padding, width, className = "" }: ContainerProps) {
     const { isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop } = useDevice();
-
-    const base = "flex flex-1 xl:mx-auto";
 
     const variantsDirection = {
         col: "flex-col",

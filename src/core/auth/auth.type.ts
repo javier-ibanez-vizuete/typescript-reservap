@@ -1,5 +1,5 @@
-import type { BookingType } from "./bookings.type";
-import type { OrderType } from "./orders.type";
+import type { BookingType } from "../../types/bookings.type";
+import type { OrderType } from "../../types/orders.type";
 
 export type Register = {
     name: string;
