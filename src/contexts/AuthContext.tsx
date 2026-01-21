@@ -1,17 +1,17 @@
 import { createContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { getUserFromLocalStorage } from "../core/auth/auth.service";
-import type { User } from "../types/auth.type";
+import type { User } from "../core/auth/auth.type";
 
 type AuthContextValue = {
     user: User | null | false;
     setUser: (user: User | null | false) => void;
 };
 
-export const AuthContext = createContext<AuthContextValue | null>(null);
-
 type AuthContextProps = {
     children: ReactNode;
 };
+
+export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: AuthContextProps) => {
     const [user, setUser] = useState<User | null | false>(null);

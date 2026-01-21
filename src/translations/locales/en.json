@@ -1,0 +1,11 @@
+{
+    "app": {},
+    "navbar": {
+        "navbar_links": {
+            "menu": "Menu",
+            "orders": "Pedidos",
+            "cart": "Carrito",
+            "bookings": "Reservas"
+        }
+    }
+}

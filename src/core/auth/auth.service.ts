@@ -1,4 +1,4 @@
-import type { Token, User } from "../../types/auth.type";
+import type { Token, User } from "./auth.type";
 
 export const saveUserInLocalStorage = (user: User) => localStorage.setItem("user", JSON.stringify(user))
 

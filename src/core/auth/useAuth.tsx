@@ -1,7 +1,6 @@
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import type { Login, Register } from "../../types/auth.type";
 import { loginApi, logoutApi, registerApi } from "./auth.api";
 import {
     removeTokenFromLocalStorage,
@@ -9,6 +8,7 @@ import {
     saveTokenInLocalStorage,
     saveUserInLocalStorage,
 } from "./auth.service";
+import type { Login, Register } from "./auth.type";
 
 export const useAuth = () => {
     const authContext = useContext(AuthContext);
@@ -17,6 +17,8 @@ export const useAuth = () => {
     if (!authContext) throw new Error("UseAuth debe usarse dentro de AuthProvider");
 
     const { user, setUser } = authContext;
+
+    const isLoggedIn = useMemo(() => (user ? true : false), [user]);
 
     const login = useCallback(async (userData: Login) => {
         try {
@@ -60,5 +62,5 @@ export const useAuth = () => {
         }
     }, []);
 
-    return { user, setUser, register, login, logout };
+    return { user, setUser, isLoggedIn, register, login, logout };
 };

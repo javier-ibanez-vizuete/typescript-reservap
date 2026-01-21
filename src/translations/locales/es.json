@@ -1,1 +1,20 @@
-{}
+{
+    "app": {},
+    "components": {
+        "profile_button": {
+            "profile": "Perfil",
+            "logout": "Cerrar sesión",
+            "loggin_out": "Cerrando sesión"
+        }
+    },
+    "navbar": {
+        "navbar_links": {
+            "menu": "Menu",
+            "orders": "Pedidos",
+            "cart": "Carrito",
+            "bookings": "Reservas"
+        },
+        "login_button": "Iniciar Sesion",
+        "register_button": "Registrarse"
+    }
+}
