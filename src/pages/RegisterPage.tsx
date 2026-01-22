@@ -1,13 +1,17 @@
 import classNames from "classnames";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import AvatarSelector from "../components/AvatarSelector";
+import LoadingButton from "../components/LoadingButton";
 import { Container } from "../components/UI/Container";
 import type { InputProps } from "../components/UI/Input";
 import Input from "../components/UI/Input";
 import { useTheme } from "../contexts/ThemeContext";
 import type { AvatarType } from "../core/auth/auth.type";
+import { useAuth } from "../core/auth/useAuth";
 import { useDevice } from "../hooks/useDevice";
+import { useLoading } from "../hooks/useLoading";
 import { useTranslate } from "../translations/useTranslate";
 
 export type FormType = {
@@ -16,16 +20,33 @@ export type FormType = {
     address: string;
     password: string;
     repassword: string;
-    phone: number;
+    phoneNumber: number | string;
     avatar: AvatarType;
 };
 
-type RegisterFormField = Omit<InputProps, "register" | "isValid" | "hasText">;
+type VisibilityPassword = { password: Boolean; repassword: boolean };
+
+type RegisterFormField = Omit<
+    InputProps,
+    "register" | "isValid" | "hasText" | "toggleVisibility" | "passwordMatch"
+>;
 
 const DEFAULT_AVATAR = {
     url: "/pictures/avatars/avatar-default.png",
     alt: "Ghost of Tuprima",
 };
+
+const FORM_DEFAULT_VALUES: FormType = {
+    name: "",
+    email: "",
+    address: "",
+    phoneNumber: "",
+    password: "",
+    repassword: "",
+    avatar: DEFAULT_AVATAR,
+};
+
+const INITIAL_PASSWORD_VISIBILITY: VisibilityPassword = { password: false, repassword: false };
 
 const baseContainerClasses = "py-2 lg:py-4";
 const baseRegisterPageConfig =
@@ -33,16 +54,23 @@ const baseRegisterPageConfig =
 const baseErrorMessageClasses = "text-text-muted italic text-2xs";
 
 export default function RegisterPage() {
+    const [passwordVisibility, setPasswordVisibility] =
+        useState<VisibilityPassword>(INITIAL_PASSWORD_VISIBILITY);
     const {
         register,
         handleSubmit,
+        reset,
         watch,
         control,
         formState: { errors },
-    } = useForm<FormType>({ mode: "onChange" });
+    } = useForm<FormType>({ mode: "onChange", defaultValues: FORM_DEFAULT_VALUES });
+    const authService = useAuth();
+
     const { t } = useTranslate();
     const { isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop } = useDevice();
     const { theme } = useTheme();
+    const { isLoading, setIsLoading } = useLoading();
+    const navigate = useNavigate();
 
     const REGISTER_FORM_FIELDS: RegisterFormField[] = [
         {
@@ -60,7 +88,7 @@ export default function RegisterPage() {
                     message: t("pages.register_page.validations_messages.max_name"),
                 },
                 pattern: {
-                    value: /^\p{L}+$/u,
+                    value: /^[ \p{L}]+$/u,
                     message: t("pages.register_page.validations_messages.invalid_field"),
                 },
             },
@@ -103,7 +131,7 @@ export default function RegisterPage() {
         },
         {
             type: "text",
-            name: "phone",
+            name: "phoneNumber",
             placeholder: t("pages.register_page.placeholder_input_phone"),
             validations: {
                 required: t("pages.register_page.validations_messages.phone"),
@@ -122,7 +150,7 @@ export default function RegisterPage() {
             },
         },
         {
-            type: "password",
+            type: passwordVisibility.password ? "text" : "password",
             name: "password",
             placeholder: t("pages.register_page.placeholder_input_password"),
             validations: {
@@ -141,28 +169,49 @@ export default function RegisterPage() {
             },
         },
         {
-            type: "password",
+            type: passwordVisibility.repassword ? "text" : "password",
             name: "repassword",
             placeholder: t("pages.register_page.placeholder_input_password"),
             validations: {
-                minLength: {
-                    value: 8,
-                    message: t("pages.register_page.validations_messages.min_repassword"),
-                },
-                maxLength: {
-                    value: 30,
-                    message: t("pages.register_page.validations_messages.max_repassword"),
-                },
-                pattern: {
-                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
-                    message: t("pages.register_page.validations_messages.invalid_password"),
+                validate: (value: unknown) => {
+                    if ((value as string).length && watch("password") !== value)
+                        return t("pages.register_page.validations_messages.repassword");
+                    return true;
                 },
             },
         },
     ];
 
+    const toggleVisibility = useCallback(
+        (inputName: "password" | "repassword") => {
+            if (inputName === "password")
+                setPasswordVisibility((prevValue) => ({ ...prevValue, password: !prevValue.password }));
+            if (inputName === "repassword")
+                setPasswordVisibility((prevValue) => ({ ...prevValue, repassword: !prevValue.repassword }));
+        },
+        [setPasswordVisibility]
+    );
+
+    const passWordMatch = useMemo(() => watch().password === watch().repassword, [watch]);
+
     const onFormSubmit: SubmitHandler<FormType> = useCallback(async (data) => {
-        console.log(data);
+        try {
+            setIsLoading(true);
+            const { repassword, ...rest } = data;
+            const dataToRegister = { ...rest };
+
+            const registerRequest = await authService.register(dataToRegister);
+            if (registerRequest) {
+                console.log("USUARIO REGISTRADO =>", registerRequest);
+                navigate("/", { state: { fromRegister: true }, replace: true });
+            }
+            reset();
+        } catch (error) {
+            // IMPLEMENTAR TOASTS
+            console.warn("Ha habido un problema Registrando al usuario");
+        } finally {
+            setIsLoading(false);
+        }
     }, []);
 
     const autoRegisterPageContainerConfig = useMemo(
@@ -234,7 +283,7 @@ export default function RegisterPage() {
                     <div className={currentFormContainerClasses}>
                         {REGISTER_FORM_FIELDS.map((field: RegisterFormField) => {
                             const inputValue = watch(field.name);
-                            const hasText = !!(inputValue as string)?.trim()?.length;
+                            const hasText = !!(inputValue as string)?.length;
                             const fieldName = field.name;
                             const error = errors[fieldName];
                             const isValid = !error && !!inputValue;
@@ -249,6 +298,8 @@ export default function RegisterPage() {
                                         validations={field.validations}
                                         isValid={isValid}
                                         hasText={hasText}
+                                        toggleVisibility={toggleVisibility}
+                                        passwordMatch={passWordMatch}
                                     />
                                     {error?.message && (
                                         <p className={baseErrorMessageClasses}>{error.message}</p>
@@ -266,7 +317,15 @@ export default function RegisterPage() {
                             render={({ field }) => <AvatarSelector field={field} />}
                         />
                     </div>
-                    <button type="submit">Registrarse</button>
+                    <LoadingButton
+                        type="submit"
+                        loading={isLoading}
+                        disabled={isLoading}
+                        variant="primary"
+                        loadingText={t("pages.register_page.register_button_loading")}
+                    >
+                        {t("pages.register_page.register_button")}
+                    </LoadingButton>
                 </form>
             </section>
         </Container>

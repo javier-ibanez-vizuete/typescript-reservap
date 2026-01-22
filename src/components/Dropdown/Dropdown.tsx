@@ -28,7 +28,8 @@ export type DropdownPlacementValues =
     | "left-end"
     | "right-start"
     | "right-end"
-    | "center-center";
+    | "center-center"
+    | "top-center";
 
 export type DropdownProps = {
     children: ReactNode;
@@ -119,6 +120,7 @@ export const Dropdown = ({
             "left-center": "right-full mr-2 -translate-y-1/2",
             "top-start": "bottom-full left-0 mb-2",
             "top-end": "bottom-full right-0 mb-2",
+            "top-center": "bottom-full left-1/2 -translate-x-1/2 mb-2",
             "bottom-start": "top-full left-0 mt-2",
             "bottom-center": "top-full left-1/2 -translate-x-1/2 mt-2",
             "bottom-full": "top-full right-0 left-0 mt-2",

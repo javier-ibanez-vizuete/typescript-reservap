@@ -19,10 +19,13 @@
     },
     "pages": {
         "register_page": {
+            "register_button": "Registrarse",
+            "register_button_loading": "Registrando",
+
             "placeholder_input_name": "Tony Stark",
             "placeholder_input_email": "tuamigoyvecino@spiderman.com",
-            "placeholder_input_password": "noteladigo19",
-            "placeholder_input_repassword": "noteladigo19",
+            "placeholder_input_password": "Noteladigo19",
+            "placeholder_input_repassword": "Noteladigo19",
             "placeholder_input_address": "La calle de la ruina, 23",
             "placeholder_input_phone": "Numero Español (612385478)",
 
@@ -30,7 +33,7 @@
                 "name": "El campo nombre es obligatorio",
                 "email": "El campo email es obligatorio",
                 "password": "El campo contraseña es obligatorio",
-                "repassword": "El campo confirmar contraseña es obligatorio",
+                "repassword": "Las Contraseñas no coinciden",
                 "address": "El campo direccion es obligatorio",
                 "phone": "El campo Telefono es obligatorio",
 
@@ -40,8 +43,6 @@
                 "max_email": "Email demasiado largo (max. 50 Caracteres)",
                 "min_password": "Contraseña demasiado corta (min. 8 Caracteres)",
                 "max_password": "Contraseña demasiado larga (max. 30 Caracteres)",
-                "min_repassword": "Contraseña demasiado corta (min. 8 Caracteres)",
-                "max_repassword": "Contraseña demasiado larga (max. 30 Caracteres)",
                 "min_address": "Dirección demasiado corta (min. 8 Caracteres)",
                 "max_address": "Dirección demasiado larga (max. 50 Caracteres)",
                 "min_phone": "Número demasiado corto (min. 9 Digitos)",

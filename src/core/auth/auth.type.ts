@@ -6,7 +6,7 @@ export type Register = {
     email: string;
     password: string;
     avatar: AvatarType;
-    phoneNumber: string;
+    phoneNumber: string | number;
     address: string;
 }
 

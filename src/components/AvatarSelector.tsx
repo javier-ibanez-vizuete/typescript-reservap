@@ -22,8 +22,8 @@ function AvatarSelector({ field }: AvatarSelectorProps) {
         () =>
             classNames({
                 "w-20": isMobile2Xs || isMobileXs,
-                "w-32": isMobileSm || isTablet,
-                "w-48": isDesktop,
+                "w-28": isMobileSm || isTablet,
+                "w-32": isDesktop,
             }),
         [isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop]
     );
@@ -33,7 +33,7 @@ function AvatarSelector({ field }: AvatarSelectorProps) {
             classNames({
                 "w-16": isMobile2Xs || isMobileXs,
                 "w-20": isMobileSm || isTablet,
-                "w-36": isDesktop,
+                "w-24": isDesktop,
             }),
         [isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop]
     );
@@ -41,7 +41,7 @@ function AvatarSelector({ field }: AvatarSelectorProps) {
     const direction = isDesktop || isTablet ? "row" : "col";
 
     return (
-        <Dropdown className="justify-center" placement="center-center">
+        <Dropdown className="justify-center" placement="top-center">
             <DropdownTrigger variant="none" shadow={false}>
                 <ImageContainer size={autoBigSizeConfig ?? ""}>
                     <Image imageData={field.value} className="rounded-md" />
@@ -55,7 +55,7 @@ function AvatarSelector({ field }: AvatarSelectorProps) {
                             <ImageContainer size={autoSmallSizeConfig ?? ""}>
                                 <Image
                                     imageData={avatar}
-                                    className={isSelectedAvatar ? "animate-pulse" : ""}
+                                    className={isSelectedAvatar ? "animate-pulse rounded-md" : "rounded-md"}
                                 />
                             </ImageContainer>
                         </DropdownItem>

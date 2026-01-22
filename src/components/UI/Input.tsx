@@ -1,26 +1,20 @@
 import classNames from "classnames";
 import { memo, useMemo } from "react";
-import type { UseFormRegister } from "react-hook-form";
+import type { RegisterOptions, UseFormRegister } from "react-hook-form";
 import { useTheme } from "../../contexts/ThemeContext";
-import { ICON_CHECK, ICON_WARNING } from "../../data/iconsData";
+import {
+    ICON_CHECK,
+    ICON_CLOSED_EYE_BLACK,
+    ICON_CLOSED_EYE_WHITE,
+    ICON_EYE_BLACK,
+    ICON_EYE_WHITE,
+    ICON_WARNING,
+} from "../../data/iconsData";
 import { useDevice } from "../../hooks/useDevice";
 import type { FormType } from "../../pages/RegisterPage";
+import Button from "./Button";
 import Image from "./Image";
 import ImageContainer from "./ImageContainer";
-
-type ValidationInputNumber = {
-    value: number;
-    message: string;
-};
-
-type ValidationInputValues = {
-    required?: true | string;
-    minLength?: number | ValidationInputNumber;
-    maxLength?: number | ValidationInputNumber;
-    min?: number | ValidationInputNumber;
-    max?: number | ValidationInputNumber;
-    pattern?: RegExp | { value: RegExp; message: string };
-};
 
 type InputType =
     | "text"
@@ -51,14 +45,26 @@ export type InputProps = {
     name: keyof FormType;
     placeholder?: string;
     register: UseFormRegister<FormType>;
-    validations?: ValidationInputValues;
+    validations?: RegisterOptions<FormType, keyof FormType>;
     isValid?: boolean;
     hasText?: boolean;
+    toggleVisibility: (inputName: "password" | "repassword") => void;
+    passwordMatch: boolean;
 };
 
 const baseInputClasses = "py-3 px-2.5 flex-1 rounded-default";
 
-const Input = ({ type, name, placeholder, register, validations, isValid, hasText }: InputProps) => {
+const Input = ({
+    type,
+    name,
+    placeholder,
+    register,
+    validations,
+    isValid,
+    hasText,
+    toggleVisibility,
+    passwordMatch,
+}: InputProps) => {
     const { theme } = useTheme();
     const { isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop } = useDevice();
 
@@ -88,6 +94,18 @@ const Input = ({ type, name, placeholder, register, validations, isValid, hasTex
         [isValid, hasText, theme]
     );
 
+    const currentIconEye = useMemo(() => {
+        if (theme === "light") return ICON_EYE_BLACK;
+        return ICON_EYE_WHITE;
+    }, [theme]);
+
+    const currentIconClosedEye = useMemo(() => {
+        if (theme === "light") return ICON_CLOSED_EYE_BLACK;
+        return ICON_CLOSED_EYE_WHITE;
+    }, [theme]);
+
+    const isPassword = name === "password" || name === "repassword";
+
     return (
         <div className={autoContainerConfig}>
             <label htmlFor={name}>{name.charAt(0).toUpperCase() + name.slice(1)}</label>
@@ -99,10 +117,29 @@ const Input = ({ type, name, placeholder, register, validations, isValid, hasTex
                     placeholder={placeholder}
                     {...register(name, { ...validations })}
                 />
-                {hasText && (
+                {hasText && name !== "repassword" && (
                     <ImageContainer>
                         <Image imageData={isValid ? ICON_CHECK : ICON_WARNING} />
                     </ImageContainer>
+                )}
+                {hasText && name === "repassword" && (
+                    <ImageContainer>
+                        <Image imageData={passwordMatch && isValid ? ICON_CHECK : ICON_WARNING} />
+                    </ImageContainer>
+                )}
+                {isPassword && (
+                    <Button variant="ghost" onClick={() => toggleVisibility(name)}>
+                        {type === "password" && (
+                            <ImageContainer>
+                                <Image imageData={currentIconClosedEye} />
+                            </ImageContainer>
+                        )}
+                        {type === "text" && (
+                            <ImageContainer>
+                                <Image imageData={currentIconEye} />
+                            </ImageContainer>
+                        )}
+                    </Button>
                 )}
             </div>
         </div>

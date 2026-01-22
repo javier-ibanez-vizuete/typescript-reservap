@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { memo, useCallback, useMemo, type HTMLAttributes, type MouseEvent, type ReactNode } from "react";
+import { useTheme } from "../contexts/ThemeContext.js";
 import { useDevice } from "../hooks/useDevice.js";
 import type { ButtonTypes, SizeType, VariantType } from "../types/index.type.js";
 import Spinner from "./Spinner.js";
@@ -17,7 +18,7 @@ export type LoadingButtonProps = {
 } & HTMLAttributes<HTMLButtonElement>;
 
 const baseClasses =
-    "inline-flex items-center justify-center font-medium transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer relative";
+    "inline-flex items-center justify-center font-medium transition-all duration-500 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer relative";
 
 function LoadingButton({
     children,
@@ -32,22 +33,33 @@ function LoadingButton({
     ...props
 }: LoadingButtonProps) {
     const { isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop } = useDevice();
+    const { theme } = useTheme();
 
     const variantClasses: Record<VariantType, string> = useMemo(
         () => ({
             default:
                 "bg-gray-50 text-text-color border border-gray-500 hover:bg-gray-500/80 focus:ring-gray-900",
-            primary:
-                "bg-primary-color text-text-color border border-primary-color hover:bg-primary-color/80 focus:ring-primary-color shadow-sm",
-            secondary:
-                "bg-secondary-color text-text-color border border-secondary-color hover:bg-secondary-color/80 focus:ring-secondary-color shadow-sm",
-            outline:
-                "bg-transparent text-text-color border border-gray-300 hover:bg-gray-50 focus:ring-gray-500",
+            primary: classNames("border shadow-sm", {
+                "bg-primary border-primary/90 lg:hover:bg-primary/90 lg:hover:shadow-primary/40":
+                    theme === "light",
+                "bg-primary-dark border-primary-dark/90 lg:hover:bg-primary/90 lg:hover:shadow-primary-dark/40":
+                    theme !== "light",
+            }),
+            secondary: classNames("border shadow-sm", {
+                "bg-secondary border-secondary/90 lg:hover:bg-secondary/90 lg:hover:shadow-secondary/40":
+                    theme === "light",
+                "bg-secondary-dark border-secondary/90 lg:hover:bg-secondary-dark/90 lg:hover:shadow-secondary-dark/40":
+                    theme !== "light",
+            }),
+            outline: classNames("border bg-transparent lg:hover:bg-gray-200/50 shadow-sm", {
+                "border-gray-600 lg:focus:ring-gray-600": theme === "light",
+                "border-gray-400 lg:focus:ring-gray-400": theme !== "light",
+            }),
             ghost: "bg-transparent text-text-color border-transparent hover:bg-gray-100 focus:ring-gray-500",
             danger: "bg-error-500 text-white border border-error-600 hover:bg-error-600 focus:ring-error-500 shadow-sm",
             none: " ",
         }),
-        []
+        [theme]
     );
 
     const sizeClasses: Record<SizeType, string> = useMemo(
@@ -81,9 +93,7 @@ function LoadingButton({
                 size ? sizeClasses[size ?? "sm"] : autoButtonConfig?.padding,
                 {
                     "opacity-50 cursor-not-allowed pointer-events-none": isDisabled,
-                    "hover:scale-105 hover:shadow-lg transform": !isDisabled && variant !== "ghost",
-                    "hover:shadow-brand-400/25": !isDisabled && variant === "primary",
-                    "hover:shadow-blue-400/25": !isDisabled && variant === "secondary",
+                    "hover:shadow-md": !isDisabled && variant !== "ghost",
                 },
                 className
             ),
