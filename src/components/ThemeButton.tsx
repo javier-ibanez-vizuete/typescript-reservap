@@ -68,8 +68,8 @@ const getContainerClasses = (
     );
 
     const autoMargin = classNames({
-        "mx-3 my-1.5": isMobile2Xs || isMobileXs || isMobileSm,
-        "mx-4 my-2": isTablet || isDesktop,
+        "mx-2.5 my-1": isMobile2Xs || isMobileXs || isMobileSm,
+        "mx-3 my-1.5": isTablet || isDesktop,
     });
 
     const currentMargin = classNames(margin ? variantsMargin[margin] : autoMargin);

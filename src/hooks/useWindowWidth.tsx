@@ -10,7 +10,7 @@ export const useWindowWidth = () => {
         timeoutRef.current = setTimeout(() => {
             setWidth(window.innerWidth);
         }, 150);
-    }, []);
+    }, [window.innerWidth]);
 
     useEffect(() => {
         window.addEventListener("resize", handleResize);
