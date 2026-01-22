@@ -47,7 +47,7 @@ function ProfileButton({ onClick }: ProfileButtonProps) {
                     className="shadow-md"
                 />
             </DropdownTrigger>
-            <DropdownMenu variant={"background"}>
+            <DropdownMenu variant="accent">
                 <Button variant="primary" onClick={handleGoProfile}>
                     {t("components.profile_button.profile")}
                 </Button>

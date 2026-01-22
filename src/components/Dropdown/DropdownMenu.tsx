@@ -17,13 +17,13 @@ export type DropdownMenuProps = {
     gap?: SizeTypeFull;
     rounded?: SizeTypeFull;
     className?: string;
+    direction?: "row" | "col";
 } & HTMLAttributes<HTMLDivElement>;
 
 const baseMenuClasses =
     "absolute z-50 flex flex-col transition-all duration-500 ease-in-out overflow-hidden max-w-[325px] xs:max-w-[375px] sm:max-w-[425px] md:max-w-[768px] lg:max-w-[1024px] xl:max-w-[1280px]";
 
-const baseContainerItemsClasses =
-    "flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden scrollbar-hide";
+const baseContainerItemsClasses = "flex flex-1 min-h-0 overflow-y-auto overflow-x-hidden scrollbar-hide";
 
 function DropdownMenu({
     children,
@@ -43,6 +43,8 @@ function DropdownMenu({
     rounded,
 
     className = "",
+
+    direction = "col",
 
     ...props
 }: DropdownMenuProps) {
@@ -94,34 +96,34 @@ function DropdownMenu({
 
     const variantConfig: Record<VariantType | "background" | "accent", string> = useMemo(
         () => ({
-            default: classNames("shadow-lg border", {
-                "bg-bg border-green-300": theme === "light",
-                "bg-bg-dark border-gray-3": theme !== "light",
+            default: classNames("shadow-sm border lg:hover:shadow-md", {
+                "bg-bg border-green-300 shadow-text/40": theme === "light",
+                "bg-bg-dark border-gray-3 shadow-text-dark/40": theme !== "light",
             }),
-            primary: classNames("shadow-lg border", {
-                "bg-primary border-primary/60": theme === "light",
-                "bg-primary-dark border-primary-dark/60": theme !== "light",
+            primary: classNames("shadow-sm border lg:hover:shadow-md", {
+                "bg-primary border-primary/60 shadow-text/40": theme === "light",
+                "bg-primary-dark border-primary-dark/60 shadow-text-dark/40": theme !== "light",
             }),
-            secondary: classNames("shadow-lg border", {
-                "bg-secondary border-secondary/60": theme === "light",
-                "bg-secondary-dark border-secondary/60": theme !== "light",
+            secondary: classNames("shadow-sm border lg:hover:shadow-md", {
+                "bg-secondary border-secondary/60 shadow-text/40": theme === "light",
+                "bg-secondary-dark border-secondary/60 shadow-text-dark/40": theme !== "light",
             }),
-            outline: classNames("shadow-lg border bg-transparent", {
-                "border-gray-600": theme === "light",
-                "border-gray-400": theme !== "light",
+            outline: classNames("shadow-sm border lg:hover:shadow-md bg-transparent", {
+                "border-gray-600 shadow-text/40": theme === "light",
+                "border-gray-400 shadow-text-dark/40": theme !== "light",
             }),
-            ghost: "shadow-lg bg-transparent border-transparent backdrop-blur-sm",
-            background: classNames("shadow-lg border", {
-                "bg-bg border-bg/60": theme === "light",
-                "bg-bg-dark border-bg-dark/60": theme !== "light",
+            ghost: "shadow-sm shadow-text/40 bg-transparent border-transparent backdrop-blur-sm",
+            background: classNames("shadow-sm border lg:hover:shadow-md", {
+                "bg-bg border-bg/60 shadow-text/40": theme === "light",
+                "bg-bg-dark border-bg-dark/60 shadow-text-dark/40": theme !== "light",
             }),
-            accent: classNames("shadow-lg border", {
-                "bg-bg-alt border-bg-alt/60": theme === "light",
-                "bg-bg-alt-dark border-bg-alt-dark/60": theme !== "light",
+            accent: classNames("shadow-sm border lg:hover:shadow-md", {
+                "bg-bg-alt border-bg-alt/60 shadow-text/40": theme === "light",
+                "bg-bg-alt-dark border-bg-alt-dark/60 shadow-text-dark/40": theme !== "light",
             }),
-            danger: classNames("shadow-lg border", {
-                "bg-error-600 border-error-500": theme === "light",
-                "bg-error-500 border-error-400": theme !== "light",
+            danger: classNames("shadow-sm border lg:hover:shadow-md", {
+                "bg-error-600 border-error-500 shadow-text/40": theme === "light",
+                "bg-error-500 border-error-400 shadow-text-dark/40": theme !== "light",
             }),
             none: " ",
         }),
@@ -130,13 +132,13 @@ function DropdownMenu({
 
     const variantsPadding = useMemo(
         () => ({
-            default: "p-sm",
+            default: "p-3",
             none: " ",
-            xs: "p-xs",
-            sm: "p-sm",
-            md: "p-md",
-            lg: "p-lg",
-            xl: "p-xl",
+            xs: "p-2",
+            sm: "p-3",
+            md: "p-4",
+            lg: "p-6",
+            xl: "p-8",
         }),
         []
     );
@@ -170,23 +172,23 @@ function DropdownMenu({
     const autoConfig = useMemo(
         () => ({
             padding: classNames({
-                "px-xs py-2xs": isMobile2Xs || isMobileXs,
-                "px-sm py-xs": isMobileSm,
-                "px-md py-sm": isTablet || isDesktop,
+                "px-2 py-0.5": isMobile2Xs || isMobileXs,
+                "px-2.5 py-1": isMobileSm,
+                "px-3 py-1.5": isTablet || isDesktop,
             }),
             gap: classNames({
-                "gap-xs": isMobile2Xs || isMobileXs,
-                "gap-sm": isMobileSm || isTablet,
-                "gap-md": isDesktop,
+                "gap-1": isMobile2Xs || isMobileXs,
+                "gap-2": isMobileSm || isTablet,
+                "gap-3": isDesktop,
             }),
             rounded: classNames({
                 "rounded-sm": isMobile2Xs || isMobileXs,
                 "rounded-default": isMobileSm || isTablet,
                 "rounded-md": isDesktop,
             }),
-            color: classNames("bg-transparent border shadow-sm lg:hover:shadow-md", {
-                "border-admin-text-color/90 lg:hover:bg-admin-text-color/10": theme === "light",
-                "border-admin-text-color-dark/90 lg:hover:bg-admin-text-color-dark/10": theme !== "light",
+            color: classNames(" border shadow-sm lg:hover:shadow-md", {
+                "bg-bg border-bg/90 lg:hover:bg-bg/90 shadow-text/40": theme === "light",
+                "bg-bg-dark border-bg-dark/90 lg:hover:bg-bg-dark/90 shadow-text-dark/40": theme !== "light",
             }),
         }),
         [isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop, theme]
@@ -213,9 +215,11 @@ function DropdownMenu({
                 gap ? variantsGap[gap ?? "default"] : autoConfig?.gap,
                 {
                     "overflow-hidden": !isOpen,
+                    "flex-col": direction === "col",
+                    "flex-row": direction === "row",
                 }
             ),
-        [containerItemHeightConfig, gap, autoConfig?.gap]
+        [containerItemHeightConfig, gap, autoConfig?.gap, direction]
     );
 
     if (!isOpen) return null;

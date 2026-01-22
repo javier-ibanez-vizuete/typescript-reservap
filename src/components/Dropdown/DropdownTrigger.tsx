@@ -137,8 +137,8 @@ export const DropdownTrigger = forwardRef<HTMLDivElement, DropdownTriggerProps>(
         const autoConfig = useMemo(
             () => ({
                 padding: classNames({
-                    "px-3 py-1.5": isMobile2Xs || isMobileXs || isMobileSm,
-                    "px-4 py-2": isTablet || isDesktop,
+                    "px-2.5 py-1": isMobile2Xs || isMobileXs || isMobileSm,
+                    "px-3 py-1.5": isTablet || isDesktop,
                 }),
                 variant: classNames("border active:scale-95 active:shadow-md", {
                     "bg-admin-accent-background border-admin-accent-background/90 lg:hover:bg-admin-accent-background/90 lg:focus:ring-admin-accent-background-dark":

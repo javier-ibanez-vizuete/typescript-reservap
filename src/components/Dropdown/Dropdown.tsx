@@ -15,10 +15,26 @@ import type { Placement, SizeTypeFull, Trigger } from "../../types/index.type";
 import DropdownMenu, { type DropdownMenuProps } from "./DropdownMenu";
 import { DropdownTrigger, type DropdownTriggerProps } from "./DropdownTrigger";
 
+export type DropdownPlacementValues =
+    | "right-center"
+    | "left-center"
+    | "top-start"
+    | "top-end"
+    | "bottom-start"
+    | "bottom-center"
+    | "bottom-full"
+    | "bottom-end"
+    | "left-start"
+    | "left-end"
+    | "right-start"
+    | "right-end"
+    | "center-center"
+    | "top-center";
+
 export type DropdownProps = {
     children: ReactNode;
     trigger?: Trigger;
-    placement?: string;
+    placement?: DropdownPlacementValues;
     padding?: SizeTypeFull;
     gap?: SizeTypeFull;
     rounded?: SizeTypeFull;
@@ -104,6 +120,7 @@ export const Dropdown = ({
             "left-center": "right-full mr-2 -translate-y-1/2",
             "top-start": "bottom-full left-0 mb-2",
             "top-end": "bottom-full right-0 mb-2",
+            "top-center": "bottom-full left-1/2 -translate-x-1/2 mb-2",
             "bottom-start": "top-full left-0 mt-2",
             "bottom-center": "top-full left-1/2 -translate-x-1/2 mt-2",
             "bottom-full": "top-full right-0 left-0 mt-2",
@@ -112,6 +129,7 @@ export const Dropdown = ({
             "left-end": "right-full bottom-0 mr-2",
             "right-start": "left-full top-0 ml-2",
             "right-end": "left-full bottom-0 ml-2",
+            "center-center": "bottom-1/2 translate-y-1/2",
         }),
         []
     );

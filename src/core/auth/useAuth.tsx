@@ -42,9 +42,10 @@ export const useAuth = () => {
                 saveUserInLocalStorage(newUserResponseData.user);
                 setUser(newUserResponseData.user);
             }
-            return navigate("/", { state: { fromRegister: true }, replace: true });
+            return newUserResponseData;
         } catch (err) {
             console.error("Error during Register =>", err);
+            throw err;
         }
     }, []);
 

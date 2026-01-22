@@ -3,7 +3,7 @@ import { memo, useMemo } from "react";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 
-import { Dropdown } from "../components/Dropdown/Dropdown";
+import { Dropdown, type DropdownPlacementValues } from "../components/Dropdown/Dropdown";
 import DropdownItem from "../components/Dropdown/DropdownItem";
 import DropdownMenu from "../components/Dropdown/DropdownMenu";
 import { DropdownTrigger } from "../components/Dropdown/DropdownTrigger";
@@ -14,7 +14,7 @@ import { useDevice } from "../hooks/useDevice";
 import type { LanguageKey } from "../types/index.type";
 
 export type LanguagesSelectorProps = {
-    placement?: string;
+    placement?: DropdownPlacementValues;
     onClick?: () => void;
 };
 
@@ -51,7 +51,7 @@ function LanguagesSelector({ placement = "bottom-start", onClick = () => {} }: L
                     <Image imageData={FLAGS_URL_DATA[language]} />
                 </ImageContainer>
             </DropdownTrigger>
-            <DropdownMenu>
+            <DropdownMenu variant="accent">
                 {languages.map((language) => (
                     <DropdownItem
                         key={language}

@@ -24,10 +24,10 @@ export type NavbarProps = {
     logoSize?: SizeType | "default";
 };
 
-const baseNavbarConfig = "flex flex-col w-full z-10 shadow-xl transition-all duration-xtraslow ease-in-out";
+const baseNavbarConfig = "flex flex-col w-full shadow-xl shrink-0 transition-all duration-500 ease-in-out";
 const baseNavbarInnerConfig = "flex justify-between items-center";
 const baseNavbarMenuContainerConfig = "justify-center items-center overflow-hidden";
-const baseNavbarActionsConfig = "flex items-center gap-xs lg:gap-sm";
+const baseNavbarActionsConfig = "flex items-center lg:gap-sm";
 const baseNavbarUserProfileConfig = "flex items-center transition-all duration-500 gap-2";
 const baseMobileMenuConfig =
     "flex flex-col min-h-0 overflow-hidden transition-all p-0 duration-500 ease-in-out z-50";
@@ -192,9 +192,11 @@ function Navbar({ height, padding, logoSize }: NavbarProps) {
                         </div>
                     )}
                     <div className={baseNavbarActionsConfig}>
+                        <ThemeButton />
+                        <LanguagesSelector placement="bottom-end" onClick={handleCloseMobileMenu} />
                         {!isLoggedIn && (
                             <div className="perfect-center self-center gap-xs lg:gap-sm">
-                                <Button onClick={handleLogin} variant="primary">
+                                <Button onClick={handleLogin} variant="primary" className="whitespace-nowrap">
                                     {t("navbar.login_button")}
                                 </Button>
                                 <Button onClick={handleRegister} variant="secondary">
@@ -202,9 +204,7 @@ function Navbar({ height, padding, logoSize }: NavbarProps) {
                                 </Button>
                             </div>
                         )}
-                        <ThemeButton />
-                        <LanguagesSelector placement="bottom-end" onClick={handleCloseMobileMenu} />
-                        {!isLoggedIn && (
+                        {isLoggedIn && (
                             <>
                                 <div className={baseNavbarUserProfileConfig}>
                                     {/* Añadir El Boton para ver el carrito */}

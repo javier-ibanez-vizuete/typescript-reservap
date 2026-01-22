@@ -124,6 +124,10 @@
     --max-width-screen-xl: 1280px;
     --max-width-screen-2xl: 1536px;
 
+    /*  Anchos Minimos */
+    --min-width-tablet: 600px;
+    --min-width-desktop: 840px;
+
     /* Bordes Radius */
     --radius-sm: 4px;
     --radius-default: 8px;
@@ -168,6 +172,12 @@
         width: 100dvw;
     }
 
+    #root {
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+    }
+
     @media (min-width: 768px) {
         body {
             font-size: 15px;
@@ -177,7 +187,7 @@
 
 @layer components {
     h1 {
-        @apply font-title font-semibold 2xs:text-3xl/[125%] xs:text-4xl/[125%] md:text-5xl/[125%] lg:text-center xl:text-6xl;
+        @apply font-title font-semibold 2xs:text-3xl/[125%] xs:text-4xl/[125%] md:text-5xl/[125%] text-center xl:text-6xl;
     }
     h2 {
         @apply font-title font-semibold 2xs:text-xl xs:text-2xl md:text-3xl xl:text-4xl;
