@@ -57,7 +57,7 @@ export default function LoginPage() {
         watch,
         reset,
 
-        formState: { errors, isDirty, isReady },
+        formState: { errors, isDirty },
     } = useForm<FormLoginType>({
         defaultValues: FORM_DEFAULT_VALUES,
         mode: "onChange",
@@ -124,7 +124,6 @@ export default function LoginPage() {
     const onFormSubmit: SubmitHandler<FormLoginType> = useCallback(async (data) => {
         try {
             setIsLoading(true);
-            console.table(data);
             await login(data);
         } catch (error) {
             console.warn("Hay un problema con el inicio de sesion", error);
