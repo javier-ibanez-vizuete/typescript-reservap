@@ -41,6 +41,7 @@ type InputType =
     | "hidden";
 
 export type InputProps = {
+    label?: string;
     type?: InputType;
     name: keyof FormType;
     placeholder?: string;
@@ -55,6 +56,7 @@ export type InputProps = {
 const baseInputClasses = "py-3 px-2.5 flex-1 rounded-default";
 
 const Input = ({
+    label,
     type,
     name,
     placeholder,
@@ -108,7 +110,7 @@ const Input = ({
 
     return (
         <div className={autoContainerConfig}>
-            <label htmlFor={name}>{name.charAt(0).toUpperCase() + name.slice(1)}</label>
+            <label htmlFor={name}>{label}</label>
             <div className="flex gap-2 items-center">
                 <input
                     id={name}

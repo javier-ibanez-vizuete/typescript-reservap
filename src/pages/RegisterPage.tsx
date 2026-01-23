@@ -74,6 +74,7 @@ export default function RegisterPage() {
 
     const REGISTER_FORM_FIELDS: RegisterFormField[] = [
         {
+            label: t("pages.register_page.label_name"),
             type: "text",
             name: "name",
             placeholder: t("pages.register_page.placeholder_input_name"),
@@ -94,6 +95,7 @@ export default function RegisterPage() {
             },
         },
         {
+            label: t("pages.register_page.label_email"),
             type: "email",
             name: "email",
             placeholder: t("pages.register_page.placeholder_input_email"),
@@ -114,6 +116,7 @@ export default function RegisterPage() {
             },
         },
         {
+            label: t("pages.register_page.label_address"),
             type: "text",
             name: "address",
             placeholder: t("pages.register_page.placeholder_input_address"),
@@ -130,6 +133,7 @@ export default function RegisterPage() {
             },
         },
         {
+            label: t("pages.register_page.label_phone"),
             type: "text",
             name: "phoneNumber",
             placeholder: t("pages.register_page.placeholder_input_phone"),
@@ -150,6 +154,7 @@ export default function RegisterPage() {
             },
         },
         {
+            label: t("pages.register_page.label_password"),
             type: passwordVisibility.password ? "text" : "password",
             name: "password",
             placeholder: t("pages.register_page.placeholder_input_password"),
@@ -169,6 +174,7 @@ export default function RegisterPage() {
             },
         },
         {
+            label: t("pages.register_page.label_repassword"),
             type: passwordVisibility.repassword ? "text" : "password",
             name: "repassword",
             placeholder: t("pages.register_page.placeholder_input_password"),
@@ -278,7 +284,7 @@ export default function RegisterPage() {
     return (
         <Container className={baseContainerClasses}>
             <section className={currentRegisterPageClasses}>
-                <h1>Registrarse</h1>
+                <h1>{t("pages.register_page.title")}</h1>
                 <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col gap-4">
                     <div className={currentFormContainerClasses}>
                         {REGISTER_FORM_FIELDS.map((field: RegisterFormField) => {
@@ -291,6 +297,7 @@ export default function RegisterPage() {
                             return (
                                 <div key={field.name} className="flex flex-col gap-0.5">
                                     <Input
+                                        label={field.label}
                                         type={field.type}
                                         name={field.name}
                                         placeholder={field.placeholder}

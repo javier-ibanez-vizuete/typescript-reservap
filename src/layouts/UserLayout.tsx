@@ -1,11 +1,13 @@
 import classNames from "classnames";
 import { useMemo } from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useTheme } from "../contexts/ThemeContext";
+import { useAuth } from "../core/auth/useAuth";
 
 export function UserLayout() {
     const { theme } = useTheme();
+    const { user } = useAuth();
 
     const currentMainCongif = useMemo(
         () =>
@@ -16,6 +18,7 @@ export function UserLayout() {
         [theme]
     );
 
+    if (user && user.role === "admin") return <Navigate to={"/admin/dashboard"} replace />;
     return (
         <>
             <Navbar />

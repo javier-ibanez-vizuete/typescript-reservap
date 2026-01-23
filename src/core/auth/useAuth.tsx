@@ -28,9 +28,11 @@ export const useAuth = () => {
                 saveUserInLocalStorage(userResponseData.user);
                 setUser(userResponseData.user);
             }
+
             return navigate("/", { replace: true });
         } catch (err) {
             console.error("Error during Login =>", err);
+            throw err;
         }
     }, []);
 
