@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import DashboardPage from "./admins/pages/DashboardPage";
 import { AdminLayout } from "./layouts/AdminLayout";
 import { UserLayout } from "./layouts/UserLayout";
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { AdminRoute } from "./router/guards/AdminRoute";
 import { GuestRoute } from "./router/guards/GuestRoute";
@@ -21,7 +23,7 @@ export function App() {
                 <Route path="menu" element={<h3>PAGINA MENU</h3>} />
                 <Route element={<GuestRoute />}>
                     <Route path="register" element={<RegisterPage />} />
-                    <Route path="login" element={<h3>PAGINA DE LOGIN</h3>} />
+                    <Route path="login" element={<LoginPage />} />
                 </Route>
 
                 <Route element={<PrivateRoute />}>
@@ -39,7 +41,7 @@ export function App() {
                     </AdminRoute>
                 }
             >
-                <Route path="dashboard" element={<h1>"ESTO SERIA EL DASHBOARD"</h1>} />
+                <Route path="dashboard" element={<DashboardPage />} />
             </Route>
             <Route path="/*" element={<h1>PAGINA NO ENCONTRADA</h1>} />
         </Routes>

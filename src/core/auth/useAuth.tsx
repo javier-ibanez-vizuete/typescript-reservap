@@ -31,6 +31,7 @@ export const useAuth = () => {
             return navigate("/", { replace: true });
         } catch (err) {
             console.error("Error during Login =>", err);
+            throw err;
         }
     }, []);
 

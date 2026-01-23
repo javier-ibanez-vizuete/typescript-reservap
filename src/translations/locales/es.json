@@ -19,8 +19,17 @@
     },
     "pages": {
         "register_page": {
+            "title": "Registrarse",
+
             "register_button": "Registrarse",
             "register_button_loading": "Registrando",
+
+            "label_name": "Nombre Completo",
+            "label_email": "Correo Electronico",
+            "label_password": "Contraseña",
+            "label_repassword": "Repetir Contraseña",
+            "label_address": "Dirección",
+            "label_phone": "Teléfono",
 
             "placeholder_input_name": "Tony Stark",
             "placeholder_input_email": "tuamigoyvecino@spiderman.com",
@@ -47,6 +56,28 @@
                 "max_address": "Dirección demasiado larga (max. 50 Caracteres)",
                 "min_phone": "Número demasiado corto (min. 9 Digitos)",
                 "max_phone": "Número demasiado largo (max. 9 Digitos)",
+
+                "invalid_field": "Caracteres introducidos no validos.",
+                "invalid_password": "La contraseña debe contener al menos 'Mayuscula, Minuscula y numero'"
+            }
+        },
+        "login_page": {
+            "title": "Iniciar Sesion",
+
+            "label_email": "Correo Electronico",
+            "label_password": "Contraseña",
+
+            "placeholder_input_email": "tuamigoyvecino@spiderman.com",
+            "placeholder_input_password": "Noteladigo19",
+
+            "validations_messages": {
+                "email": "El campo email es obligatorio",
+                "password": "El campo contraseña es obligatorio",
+
+                "min_email": "Email demasiado corto (min. 5 Caracteres)",
+                "max_email": "Email demasiado largo (max. 50 Caracteres)",
+                "min_password": "Contraseña demasiado corta (min. 8 Caracteres)",
+                "max_password": "Contraseña demasiado larga (max. 30 Caracteres)",
 
                 "invalid_field": "Caracteres introducidos no validos.",
                 "invalid_password": "La contraseña debe contener al menos 'Mayuscula, Minuscula y numero'"
