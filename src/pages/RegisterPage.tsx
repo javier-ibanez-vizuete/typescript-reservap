@@ -208,7 +208,6 @@ export default function RegisterPage() {
 
             const registerRequest = await authService.register(dataToRegister);
             if (registerRequest) {
-                console.log("USUARIO REGISTRADO =>", registerRequest);
                 navigate("/", { state: { fromRegister: true }, replace: true });
             }
             reset();

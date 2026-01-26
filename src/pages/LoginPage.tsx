@@ -46,6 +46,7 @@ const baseContainerClasses = "py-2 lg:py-4";
 const baseLoginPageClasses =
     "flex flex-col self-center transition-all duration-500 ease-in-out shadow-md lg:hover:shadow-lg";
 const baseInputClasses = "py-3 px-2.5 flex-1 rounded-default";
+const baseErrorTextClasses = "italic opacity-60";
 
 export default function LoginPage() {
     const [passVisibility, setPassVisibility] = useState<VisibilityPassword>(INITIAL_PASSWORD_VISIBILITY);
@@ -62,8 +63,8 @@ export default function LoginPage() {
         defaultValues: FORM_DEFAULT_VALUES,
         mode: "onChange",
     });
-    const { login } = useAuth();
 
+    const { login } = useAuth();
     const { theme } = useTheme();
     const { t } = useTranslate();
     const { isLoading, setIsLoading } = useLoading();
@@ -238,6 +239,15 @@ export default function LoginPage() {
         return ICON_CLOSED_EYE_WHITE;
     }, [theme]);
 
+    const currentErrorTextConfig = useMemo(
+        () =>
+            classNames(baseErrorTextClasses, {
+                "text-text-muted": theme === "light",
+                "text-text-muted-dark": theme !== "light",
+            }),
+        [theme]
+    );
+
     return (
         <Container className={baseContainerClasses}>
             <section className={currentLoginPageClasses}>
@@ -284,7 +294,11 @@ export default function LoginPage() {
                                             </Button>
                                         )}
                                     </div>
-                                    {errors[field?.name]?.message && <p>{errors[field?.name]?.message}</p>}
+                                    {errors[field?.name]?.message && (
+                                        <p role="alert" className={currentErrorTextConfig}>
+                                            {errors[field?.name]?.message}
+                                        </p>
+                                    )}
                                 </div>
                             );
                         })}
@@ -293,12 +307,12 @@ export default function LoginPage() {
                         variant="primary"
                         loading={isLoading}
                         disabled={isLoading}
-                        loadingText="INICIANDO SESION"
+                        loadingText={t("pages.login_page.login_button_loading")}
                         type="submit"
                     >
-                        INICIAR SESION
+                        {t("pages.login_page.login_button")}
                     </LoadingButton>
-                    {errorForm && <p className="text-error-600 opacity-70 italic">{errorForm}</p>}
+                    {errorForm && <p className={currentErrorTextConfig}>{errorForm}</p>}
                 </form>
             </section>
         </Container>
