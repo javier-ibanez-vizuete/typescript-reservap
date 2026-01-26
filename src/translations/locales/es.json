@@ -64,6 +64,9 @@
         "login_page": {
             "title": "Iniciar Sesion",
 
+            "login_button": "Iniciar Sesion",
+            "login_button_loading": "Iniciando sesion",
+
             "label_email": "Correo Electronico",
             "label_password": "Contraseña",
 
@@ -81,6 +84,11 @@
 
                 "invalid_field": "Caracteres introducidos no validos.",
                 "invalid_password": "La contraseña debe contener al menos 'Mayuscula, Minuscula y numero'"
+            },
+
+            "toasts": {
+                "login_successfully": "Sesión iniciada correctamente",
+                "login_error": "Fallo en el inicio de sesion"
             }
         }
     }

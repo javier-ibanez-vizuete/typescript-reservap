@@ -1,6 +1,8 @@
 import { useCallback, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import { useToast } from "../../contexts/ToastsContext/ToastsContext";
+import { useTranslate } from "../../translations/useTranslate";
 import { loginApi, logoutApi, registerApi } from "./auth.api";
 import {
     removeTokenFromLocalStorage,
@@ -12,6 +14,8 @@ import type { Login, Register } from "./auth.type";
 
 export const useAuth = () => {
     const authContext = useContext(AuthContext);
+    const { showToast } = useToast();
+    const { t } = useTranslate();
     const navigate = useNavigate();
 
     if (!authContext) throw new Error("UseAuth debe usarse dentro de AuthProvider");
@@ -27,11 +31,13 @@ export const useAuth = () => {
                 saveTokenInLocalStorage(userResponseData.token);
                 saveUserInLocalStorage(userResponseData.user);
                 setUser(userResponseData.user);
+                showToast(t("pages.login_page.toasts.login_successfully"), "success", 3000);
             }
 
             return navigate("/", { replace: true });
         } catch (err) {
             console.error("Error during Login =>", err);
+            showToast(t("pages.login_page.toasts.login_error"), "error", 3000);
             throw err;
         }
     }, []);
