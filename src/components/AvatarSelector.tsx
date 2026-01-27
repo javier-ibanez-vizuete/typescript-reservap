@@ -3,7 +3,7 @@ import { memo, useMemo } from "react";
 import type { ControllerRenderProps } from "react-hook-form";
 import { AVATAR_DATA } from "../data/avatarData";
 import { useDevice } from "../hooks/useDevice";
-import type { FormRegisterType } from "../pages/RegisterPage";
+import type { FormType } from "../pages/RegisterPage";
 import { Dropdown } from "./Dropdown/Dropdown";
 import DropdownItem from "./Dropdown/DropdownItem";
 import DropdownMenu from "./Dropdown/DropdownMenu";
@@ -12,7 +12,7 @@ import Image from "./UI/Image";
 import ImageContainer from "./UI/ImageContainer";
 
 type AvatarSelectorProps = {
-    field: ControllerRenderProps<FormRegisterType, "avatar">;
+    field: ControllerRenderProps<FormType, "avatar">;
 };
 
 function AvatarSelector({ field }: AvatarSelectorProps) {

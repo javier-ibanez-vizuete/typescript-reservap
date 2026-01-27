@@ -1,4 +1,4 @@
-import type { PositionsToasts } from "./ToastsContext";
+import type { PositionsToasts } from "../../contexts/ToastsContext";
 
 export const getPositionStyle = (position: PositionsToasts): string => {
     const base = "fixed flex flex-col z-1000 gap-4 p-4";

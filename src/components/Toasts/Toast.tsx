@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { useMemo } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 
-import type { TypeOfToasts } from "../../contexts/ToastsContext/ToastsContext";
+import type { TypeOfToasts } from "../../contexts/ToastsContext";
 import { useDevice } from "../../hooks/useDevice";
 
 type ToastProps = {

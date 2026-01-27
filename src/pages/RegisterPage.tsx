@@ -7,7 +7,7 @@ import LoadingButton from "../components/LoadingButton";
 import { Container } from "../components/UI/Container";
 import type { InputProps } from "../components/UI/Input";
 import Input from "../components/UI/Input";
-import { useTheme } from "../contexts/ThemeContext";
+import { Theme, useTheme } from "../contexts/ThemeContext";
 import type { AvatarType } from "../core/auth/auth.type";
 import { useAuth } from "../core/auth/useAuth";
 import { useDevice } from "../hooks/useDevice";
@@ -237,16 +237,16 @@ export default function RegisterPage() {
                 "min-w-desktop": isDesktop,
             }),
             background: classNames({
-                "bg-bg-alt": theme === "light",
-                "bg-bg-alt-dark": theme !== "light",
+                "bg-bg-alt": theme === Theme.LIGHT,
+                "bg-bg-alt-dark": theme !== Theme.LIGHT,
             }),
             rounded: classNames({
                 "rounded-default": isMobile2Xs || isMobileXs,
                 "rounded-md": isMobileSm || isTablet || isDesktop,
             }),
             shadow: classNames({
-                "shadow-text/40": theme === "light",
-                "shadow-text-dark/40": theme !== "light",
+                "shadow-text/40": theme === Theme.LIGHT,
+                "shadow-text-dark/40": theme !== Theme.LIGHT,
             }),
         }),
         [isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop, theme]
@@ -296,12 +296,13 @@ export default function RegisterPage() {
                             return (
                                 <div key={field.name} className="flex flex-col gap-0.5">
                                     <Input
-                                        label={field.label}
-                                        type={field.type}
-                                        name={field.name}
-                                        placeholder={field.placeholder}
+                                        {...field}
+                                        // label={field.label}
+                                        // type={field.type}
+                                        // name={field.name}
+                                        // placeholder={field.placeholder}
+                                        // validations={field.validations}
                                         register={register}
-                                        validations={field.validations}
                                         isValid={isValid}
                                         hasText={hasText}
                                         toggleVisibility={toggleVisibility}

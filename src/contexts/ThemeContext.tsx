@@ -1,7 +1,11 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { getDataFromSessionStorage, saveDataInSessionStorage } from "../helper/storage";
 
-export type Theme = "light" | "dark";
+// export type Theme = "light" | "dark";
+export enum Theme {
+    LIGHT = "light",
+    DARK = "dark",
+}
 
 export type ThemeContextValue = {
     theme: Theme;
@@ -15,11 +19,11 @@ export type ThemeContextProps = {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export const ThemeProvider = ({ children }: ThemeContextProps) => {
-    const [theme, setTheme] = useState<Theme>("light");
+    const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
 
     const onToggleTheme = useCallback(() => {
         setTheme((prevValue) => {
-            const newValue = prevValue === "light" ? "dark" : "light";
+            const newValue = prevValue === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
             saveDataInSessionStorage("theme", newValue);
             return newValue;
         });
