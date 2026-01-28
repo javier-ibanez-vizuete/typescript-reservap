@@ -1,9 +1,8 @@
 import classNames from "classnames";
 import { memo, useMemo } from "react";
-import type { ControllerRenderProps } from "react-hook-form";
+import type { ControllerRenderProps, FieldValues, Path } from "react-hook-form";
 import { AVATAR_DATA } from "../data/avatarData";
 import { useDevice } from "../hooks/useDevice";
-import type { FormType } from "../pages/RegisterPage";
 import { Dropdown } from "./Dropdown/Dropdown";
 import DropdownItem from "./Dropdown/DropdownItem";
 import DropdownMenu from "./Dropdown/DropdownMenu";
@@ -11,11 +10,11 @@ import { DropdownTrigger } from "./Dropdown/DropdownTrigger";
 import Image from "./UI/Image";
 import ImageContainer from "./UI/ImageContainer";
 
-type AvatarSelectorProps = {
-    field: ControllerRenderProps<FormType, "avatar">;
+type AvatarSelectorProps<T extends FieldValues = FieldValues> = {
+    field: ControllerRenderProps<T, Path<T>>;
 };
 
-function AvatarSelector({ field }: AvatarSelectorProps) {
+function AvatarSelector<T extends FieldValues = FieldValues>({ field }: AvatarSelectorProps<T>) {
     const { isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop } = useDevice();
 
     const autoBigSizeConfig = useMemo(
@@ -66,4 +65,4 @@ function AvatarSelector({ field }: AvatarSelectorProps) {
     );
 }
 
-export default memo(AvatarSelector);
+export default memo(AvatarSelector) as typeof AvatarSelector;

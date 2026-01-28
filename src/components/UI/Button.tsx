@@ -116,8 +116,8 @@ function Button({
     const autoConfig = useMemo(
         () => ({
             padding: classNames({
-                "px-2.5 py-1": isMobile2Xs || isMobileXs || isMobileSm,
-                "px-3 py-1.5": isTablet || isDesktop,
+                "px-3 py-1.5 text-xs": isMobile2Xs || isMobileXs || isMobileSm,
+                "px-4 py-2 text-base": isTablet || isDesktop,
             }),
         }),
         [isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop]

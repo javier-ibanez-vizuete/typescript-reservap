@@ -4,8 +4,9 @@ import DashboardPage from "./admins/pages/DashboardPage";
 import { AdminLayout } from "./layouts/AdminLayout";
 import { UserLayout } from "./layouts/UserLayout";
 import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+
+import { LoginPage } from "./pages/LoginPage";
+import { RegisterPage } from "./pages/RegisterPage";
 import { AdminRoute } from "./router/guards/AdminRoute";
 import { GuestRoute } from "./router/guards/GuestRoute";
 import { PrivateRoute } from "./router/guards/PrivateRoute";

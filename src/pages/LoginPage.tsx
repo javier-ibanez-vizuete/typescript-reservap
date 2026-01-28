@@ -1,79 +1,58 @@
 import classNames from "classnames";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useForm, type RegisterOptions, type SubmitHandler } from "react-hook-form";
-import LoadingButton from "../components/LoadingButton";
-import Button from "../components/UI/Button";
+import { useCallback, useMemo, useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import FormComponent, {
+    FormType,
+    InputType,
+    PasswordName,
+    type FormData,
+} from "../components/formComponents/FormComponent";
 import { Container } from "../components/UI/Container";
-import Image from "../components/UI/Image";
-import ImageContainer from "../components/UI/ImageContainer";
-import { useTheme } from "../contexts/ThemeContext";
-import { useAuth } from "../core/auth/useAuth";
-import {
-    ICON_CHECK,
-    ICON_CLOSED_EYE_BLACK,
-    ICON_CLOSED_EYE_WHITE,
-    ICON_EYE_BLACK,
-    ICON_EYE_WHITE,
-    ICON_WARNING,
-} from "../data/iconsData";
+import { Theme, useTheme } from "../contexts/ThemeContext";
 import { useDevice } from "../hooks/useDevice";
 import { useLoading } from "../hooks/useLoading";
 import { useTranslate } from "../translations/useTranslate";
 
-export type FormLoginType = {
+type FormFields = {
     email: string;
     password: string;
 };
 
-type VisibilityPassword = { password: boolean };
-
-type InputFields = {
-    label: string;
-    type: "email" | "text" | "password";
-    name: "email" | "password";
-    placeholder: string;
-    validations: RegisterOptions<FormLoginType, keyof FormLoginType>;
-};
-
-const FORM_DEFAULT_VALUES = {
+const FORM_DEFAULT_VALUES: FormFields = {
     email: "",
     password: "",
 };
 
-const INITIAL_PASSWORD_VISIBILITY: VisibilityPassword = { password: false };
+type PassVisibility = {
+    password: boolean;
+};
 
-const baseContainerClasses = "py-2 lg:py-4";
-const baseLoginPageClasses =
+const INITIAL_PASS_VISIBILITY = { password: false };
+
+const baseContainerClasses = "py-4 lg:py-6";
+const baseRegisterPageConfig =
     "flex flex-col self-center transition-all duration-500 ease-in-out shadow-md lg:hover:shadow-lg";
-const baseInputClasses = "py-3 px-2.5 flex-1 rounded-default";
-const baseErrorTextClasses = "italic opacity-60";
 
-export default function LoginPage() {
-    const [passVisibility, setPassVisibility] = useState<VisibilityPassword>(INITIAL_PASSWORD_VISIBILITY);
-    const [errorForm, setErrorForm] = useState<string | null>(null);
+export function LoginPage() {
+    const [passVisibility, setPassVisibility] = useState<PassVisibility>(INITIAL_PASS_VISIBILITY);
 
     const {
         register,
-        handleSubmit,
         watch,
+        handleSubmit,
         reset,
-
         formState: { errors, isDirty },
-    } = useForm<FormLoginType>({
-        defaultValues: FORM_DEFAULT_VALUES,
-        mode: "onChange",
-    });
+    } = useForm<FormFields>({ mode: "onChange", defaultValues: FORM_DEFAULT_VALUES });
 
-    const { login } = useAuth();
-    const { theme } = useTheme();
-    const { t } = useTranslate();
-    const { isLoading, setIsLoading } = useLoading();
     const { isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop } = useDevice();
+    const { isLoading, setIsLoading } = useLoading();
+    const { t } = useTranslate();
+    const { theme } = useTheme();
 
-    const LOGIN_FORM_FIELDS: InputFields[] = [
+    const FORM_DATA: FormData<FormFields>[] = [
         {
             label: t("pages.login_page.label_email"),
-            type: "email",
+            type: InputType.EMAIL,
             name: "email",
             placeholder: t("pages.login_page.placeholder_input_email"),
             validations: {
@@ -94,8 +73,8 @@ export default function LoginPage() {
         },
         {
             label: t("pages.login_page.label_password"),
-            type: passVisibility.password ? "text" : "password",
-            name: "password",
+            type: passVisibility.password ? InputType.TEXT : InputType.PASSWORD,
+            name: PasswordName.PASSWORD,
             placeholder: t("pages.login_page.placeholder_input_password"),
             validations: {
                 minLength: {
@@ -114,33 +93,27 @@ export default function LoginPage() {
         },
     ];
 
-    const toggleVisibility = useCallback(
-        (inputName: string) => {
-            if (inputName === "password")
-                setPassVisibility((prevValue) => ({ password: !prevValue.password }));
-        },
-        [setPassVisibility]
-    );
-
-    const onFormSubmit: SubmitHandler<FormLoginType> = useCallback(async (data) => {
+    const onFormSubmit: SubmitHandler<FormFields> = useCallback((data) => {
         try {
             setIsLoading(true);
-            await login(data);
+            console.log("Sending data", data);
         } catch (error) {
-            console.warn("Hay un problema con el inicio de sesion", error);
-            setErrorForm("Correo Eléctronico o Contraseña Incorrectos");
+            console.warn("Error during Login");
         } finally {
-            reset();
             setIsLoading(false);
         }
     }, []);
 
-    useEffect(() => {
-        if (!watch().email && !watch().password) return;
-        setErrorForm(null);
-    }, [isDirty, watch]);
+    const onToggleVisibility = useCallback(
+        (inputName: string) => {
+            if (inputName === PasswordName.PASSWORD) {
+                setPassVisibility((prevValue) => ({ password: !prevValue.password }));
+            }
+        },
+        [setPassVisibility]
+    );
 
-    const autoLoginPageContainerConfig = useMemo(
+    const autoRegisterPageContainerConfig = useMemo(
         () => ({
             gap: classNames({
                 "gap-2": isMobile2Xs || isMobileXs || isMobileSm || isTablet,
@@ -158,162 +131,52 @@ export default function LoginPage() {
                 "min-w-desktop": isDesktop,
             }),
             background: classNames({
-                "bg-bg-alt": theme === "light",
-                "bg-bg-alt-dark": theme !== "light",
+                "bg-bg-alt": theme === Theme.LIGHT,
+                "bg-bg-alt-dark": theme !== Theme.LIGHT,
             }),
             rounded: classNames({
                 "rounded-default": isMobile2Xs || isMobileXs,
                 "rounded-md": isMobileSm || isTablet || isDesktop,
             }),
             shadow: classNames({
-                "shadow-text/40": theme === "light",
-                "shadow-text-dark/40": theme !== "light",
+                "shadow-text/40": theme === Theme.LIGHT,
+                "shadow-text-dark/40": theme !== Theme.LIGHT,
             }),
         }),
         [isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop, theme]
     );
 
-    const currentLoginPageClasses = useMemo(
+    const currentRegisterPageClasses = useMemo(
         () =>
             classNames(
-                baseLoginPageClasses,
-                autoLoginPageContainerConfig?.gap || "gap-2",
-                autoLoginPageContainerConfig?.background || "bg-bg-alt",
-                autoLoginPageContainerConfig?.width || "min-w-full",
-                autoLoginPageContainerConfig?.padding || "py-8 px-4",
-                autoLoginPageContainerConfig?.rounded || "rounded-default"
+                baseRegisterPageConfig,
+                autoRegisterPageContainerConfig?.gap || "gap-2",
+                autoRegisterPageContainerConfig?.background || "bg-bg-alt",
+                autoRegisterPageContainerConfig?.width || "min-w-full",
+                autoRegisterPageContainerConfig?.padding || "py-8 px-4",
+                autoRegisterPageContainerConfig?.rounded || "rounded-default"
             ),
-        [autoLoginPageContainerConfig]
-    );
-
-    const currentFormContainerClasses = useMemo(
-        () =>
-            classNames(
-                {
-                    "flex flex-col": isMobile2Xs || isMobileXs || isMobileSm,
-                    "grid grid-cols-2": isTablet || isDesktop,
-                },
-                {
-                    "gap-4": isMobile2Xs || isMobileXs || isMobileSm,
-                    "gap-y-3 gap-x-5": isTablet || isDesktop,
-                }
-            ),
-        [isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop]
-    );
-
-    const autoInputContainerConfig = useMemo(
-        () =>
-            classNames("flex flex-col", {
-                "gap-0.5": isMobile2Xs || isMobileXs || isMobileSm,
-                "gap-1": isTablet || isDesktop,
-            }),
-        [isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop]
-    );
-
-    const getInputClasses = useCallback(
-        (hasValue: boolean, isValidValue: boolean): string => {
-            const autoInputConfig = classNames(
-                baseInputClasses,
-                {
-                    "focus-visible:outline-primary": !hasValue,
-                    "focus-visible:outline-error-600": hasValue && !isValidValue,
-                    "focus-visible:outline-success-600": isValidValue,
-                },
-                {
-                    "bg-bg placeholder:text-muted": theme === "light",
-                    "bg-bg-dark placeholder:text-muted-dark": theme !== "light",
-                }
-            );
-            return autoInputConfig;
-        },
-        [theme]
-    );
-
-    const currentIconEye = useMemo(() => {
-        if (theme === "light") return ICON_EYE_BLACK;
-        return ICON_EYE_WHITE;
-    }, [theme]);
-
-    const currentIconClosedEye = useMemo(() => {
-        if (theme === "light") return ICON_CLOSED_EYE_BLACK;
-        return ICON_CLOSED_EYE_WHITE;
-    }, [theme]);
-
-    const currentErrorTextConfig = useMemo(
-        () =>
-            classNames(baseErrorTextClasses, {
-                "text-text-muted": theme === "light",
-                "text-text-muted-dark": theme !== "light",
-            }),
-        [theme]
+        [autoRegisterPageContainerConfig]
     );
 
     return (
         <Container className={baseContainerClasses}>
-            <section className={currentLoginPageClasses}>
+            <section className={currentRegisterPageClasses}>
                 <h1>{t("pages.login_page.title")}</h1>
-                <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col gap-4">
-                    <div className={currentFormContainerClasses}>
-                        {LOGIN_FORM_FIELDS.map((field) => {
-                            const hasValue = !!watch(field?.name)?.length;
-                            const error = errors[field?.name];
-                            const isValidValue = !error && hasValue;
-                            const isPassword = field?.name === "password";
-
-                            return (
-                                <div key={field?.name} className={autoInputContainerConfig}>
-                                    <label htmlFor={field?.name}>{field?.label}</label>
-                                    <div className="flex items-center gap-2">
-                                        <input
-                                            id={field?.name}
-                                            type={field?.type}
-                                            placeholder={field?.placeholder}
-                                            className={getInputClasses(hasValue, isValidValue)}
-                                            {...register(field?.name, field?.validations)}
-                                        />
-                                        {hasValue && (
-                                            <ImageContainer>
-                                                <Image imageData={isValidValue ? ICON_CHECK : ICON_WARNING} />
-                                            </ImageContainer>
-                                        )}
-                                        {isPassword && (
-                                            <Button
-                                                variant="ghost"
-                                                onClick={() => toggleVisibility(field?.name)}
-                                            >
-                                                {field?.type === "password" && (
-                                                    <ImageContainer>
-                                                        <Image imageData={currentIconClosedEye} />
-                                                    </ImageContainer>
-                                                )}
-                                                {field?.type === "text" && (
-                                                    <ImageContainer>
-                                                        <Image imageData={currentIconEye} />
-                                                    </ImageContainer>
-                                                )}
-                                            </Button>
-                                        )}
-                                    </div>
-                                    {errors[field?.name]?.message && (
-                                        <p role="alert" className={currentErrorTextConfig}>
-                                            {errors[field?.name]?.message}
-                                        </p>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-                    <LoadingButton
-                        variant="primary"
-                        loading={isLoading}
-                        disabled={isLoading}
-                        loadingText={t("pages.login_page.login_button_loading")}
-                        type="submit"
-                    >
-                        {t("pages.login_page.login_button")}
-                    </LoadingButton>
-                    {errorForm && <p className={currentErrorTextConfig}>{errorForm}</p>}
-                </form>
+                <FormComponent
+                    formType={FormType.LOGIN}
+                    formData={FORM_DATA}
+                    registerHook={register}
+                    onFormSubmit={handleSubmit(onFormSubmit)}
+                    errorsHook={errors}
+                    watch={watch}
+                    isDirty={isDirty}
+                    reset={reset}
+                    onToggleVisibility={onToggleVisibility}
+                    submitText={t("pages.login_page.login_button")}
+                    loadingSubmitText={t("pages.login_page.login_button_loading")}
+                    isLoading={isLoading}
+                />
             </section>
         </Container>
     );

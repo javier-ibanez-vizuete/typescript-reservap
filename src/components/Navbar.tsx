@@ -207,7 +207,6 @@ function Navbar({ height, padding, logoSize }: NavbarProps) {
                         {isLoggedIn && (
                             <>
                                 <div className={baseNavbarUserProfileConfig}>
-                                    {/* Añadir El Boton para ver el carrito */}
                                     {!pathname.includes("/profile") && (
                                         <ProfileButton onClick={handleCloseMobileMenu} />
                                     )}

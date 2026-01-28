@@ -38,7 +38,7 @@ export const DropdownTrigger = forwardRef<HTMLDivElement, DropdownTriggerProps>(
         const baseTriggerClasses = useMemo(
             () =>
                 classNames(
-                    "cursor-pointer transition-all duration-500 ease-in-out lg:focus:outline-none lg:focus:ring-1 lg:focus:ring-offset-2",
+                    "cursor-pointer perfect-center transition-all duration-500 ease-in-out lg:focus:outline-none lg:focus:ring-1 lg:focus:ring-offset-2",
                     {
                         "cursor-not-allowed": disabled,
                         "shadow-sm": shadow,
