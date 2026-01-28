@@ -93,6 +93,9 @@
                 "login_successfully": "Sesión iniciada correctamente",
                 "login_error": "Fallo en el inicio de sesion"
             }
+        },
+        "home_page": {
+            "title": "Pagina Principal"
         }
     }
 }
