@@ -1,81 +1,79 @@
 import classNames from "classnames";
 import { useCallback, useMemo, useState } from "react";
-import { Controller, useForm, type SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import AvatarSelector from "../components/AvatarSelector";
-import LoadingButton from "../components/LoadingButton";
+import { useForm, type Path, type SubmitHandler } from "react-hook-form";
+import FormComponent, {
+    FormType,
+    InputType,
+    PasswordName,
+    type ControllerData,
+    type FormData,
+} from "../components/formComponent/FormComponent";
 import { Container } from "../components/UI/Container";
-import type { InputProps } from "../components/UI/Input";
-import Input from "../components/UI/Input";
 import { Theme, useTheme } from "../contexts/ThemeContext";
-import type { AvatarType } from "../core/auth/auth.type";
 import { useAuth } from "../core/auth/useAuth";
 import { useDevice } from "../hooks/useDevice";
 import { useLoading } from "../hooks/useLoading";
 import { useTranslate } from "../translations/useTranslate";
 
-export type FormType = {
+type FormFields = {
     name: string;
     email: string;
     address: string;
+    phoneNumber: string;
     password: string;
-    repassword: string;
-    phoneNumber: number | string;
-    avatar: AvatarType;
+    password2: string;
+    avatar: { url: string; alt: string };
 };
-
-type VisibilityPassword = { password: Boolean; repassword: boolean };
-
-type RegisterFormField = Omit<
-    InputProps,
-    "register" | "isValid" | "hasText" | "toggleVisibility" | "passwordMatch"
->;
 
 const DEFAULT_AVATAR = {
     url: "/pictures/avatars/avatar-default.png",
     alt: "Ghost of Tuprima",
 };
 
-const FORM_DEFAULT_VALUES: FormType = {
+const FORM_DEFAULT_VALUES: FormFields = {
     name: "",
     email: "",
     address: "",
     phoneNumber: "",
     password: "",
-    repassword: "",
+    password2: "",
     avatar: DEFAULT_AVATAR,
 };
 
-const INITIAL_PASSWORD_VISIBILITY: VisibilityPassword = { password: false, repassword: false };
+const INITIAL_PASS_VISIBILITY = {
+    password: false,
+    password2: false,
+};
 
-const baseContainerClasses = "py-2 lg:py-4";
+const baseContainerClasses = "py-4 lg:py-6";
 const baseRegisterPageConfig =
     "flex flex-col self-center transition-all duration-500 ease-in-out shadow-md lg:hover:shadow-lg";
-const baseErrorMessageClasses = "text-text-muted italic text-2xs";
 
-export default function RegisterPage() {
-    const [passwordVisibility, setPasswordVisibility] =
-        useState<VisibilityPassword>(INITIAL_PASSWORD_VISIBILITY);
+export function RegisterPage() {
+    const [passVisibility, setPassVisibility] = useState(INITIAL_PASS_VISIBILITY);
+
     const {
         register,
         handleSubmit,
-        reset,
-        watch,
         control,
+        watch,
+        reset,
         formState: { errors },
-    } = useForm<FormType>({ mode: "onChange", defaultValues: FORM_DEFAULT_VALUES });
+    } = useForm<FormFields>({
+        mode: "onChange",
+        defaultValues: FORM_DEFAULT_VALUES,
+    });
     const authService = useAuth();
 
     const { t } = useTranslate();
+    const { isLoading, setIsLoading } = useLoading();
     const { isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop } = useDevice();
     const { theme } = useTheme();
-    const { isLoading, setIsLoading } = useLoading();
-    const navigate = useNavigate();
 
-    const REGISTER_FORM_FIELDS: RegisterFormField[] = [
+    const FORM_DATA: FormData<FormFields>[] = [
         {
             label: t("pages.register_page.label_name"),
-            type: "text",
+            type: InputType.TEXT,
             name: "name",
             placeholder: t("pages.register_page.placeholder_input_name"),
             validations: {
@@ -96,7 +94,7 @@ export default function RegisterPage() {
         },
         {
             label: t("pages.register_page.label_email"),
-            type: "email",
+            type: InputType.EMAIL,
             name: "email",
             placeholder: t("pages.register_page.placeholder_input_email"),
             validations: {
@@ -117,7 +115,7 @@ export default function RegisterPage() {
         },
         {
             label: t("pages.register_page.label_address"),
-            type: "text",
+            type: InputType.TEXT,
             name: "address",
             placeholder: t("pages.register_page.placeholder_input_address"),
             validations: {
@@ -134,7 +132,7 @@ export default function RegisterPage() {
         },
         {
             label: t("pages.register_page.label_phone"),
-            type: "text",
+            type: InputType.TEXT,
             name: "phoneNumber",
             placeholder: t("pages.register_page.placeholder_input_phone"),
             validations: {
@@ -149,16 +147,17 @@ export default function RegisterPage() {
                 },
                 pattern: {
                     value: /^[6789]\d{8}$/,
-                    message: "El numero telefono debe comenzar por 6********",
+                    message: "El número telefono debe comenzar por 6, 7, 8 o 9",
                 },
             },
         },
         {
             label: t("pages.register_page.label_password"),
-            type: passwordVisibility.password ? "text" : "password",
-            name: "password",
+            type: passVisibility.password ? InputType.TEXT : InputType.PASSWORD,
+            name: PasswordName.PASSWORD,
             placeholder: t("pages.register_page.placeholder_input_password"),
             validations: {
+                required: t("pages.register_page.validations_messages.password"),
                 minLength: {
                     value: 8,
                     message: t("pages.register_page.validations_messages.min_password"),
@@ -175,47 +174,49 @@ export default function RegisterPage() {
         },
         {
             label: t("pages.register_page.label_repassword"),
-            type: passwordVisibility.repassword ? "text" : "password",
-            name: "repassword",
+            type: passVisibility.password2 ? InputType.TEXT : InputType.PASSWORD,
+            name: PasswordName.PASSWORD2,
             placeholder: t("pages.register_page.placeholder_input_password"),
             validations: {
                 validate: (value: unknown) => {
-                    if ((value as string).length && watch("password") !== value)
+                    const passwordValue = watch(PasswordName.PASSWORD);
+                    if ((value as string).length && passwordValue !== value) {
                         return t("pages.register_page.validations_messages.repassword");
+                    }
                     return true;
                 },
             },
         },
     ];
 
-    const toggleVisibility = useCallback(
-        (inputName: "password" | "repassword") => {
-            if (inputName === "password")
-                setPasswordVisibility((prevValue) => ({ ...prevValue, password: !prevValue.password }));
-            if (inputName === "repassword")
-                setPasswordVisibility((prevValue) => ({ ...prevValue, repassword: !prevValue.repassword }));
+    const CONTROLLER_DATA: ControllerData<FormFields>[] = [
+        {
+            name: "avatar" as Path<FormFields>,
+            defaultValue: DEFAULT_AVATAR,
+            control,
         },
-        [setPasswordVisibility]
-    );
+    ];
 
-    const passWordMatch = useMemo(() => watch().password === watch().repassword, [watch]);
-
-    const onFormSubmit: SubmitHandler<FormType> = useCallback(async (data) => {
+    const onFormSubmit: SubmitHandler<FormFields> = useCallback(async (data) => {
         try {
             setIsLoading(true);
-            const { repassword, ...rest } = data;
+            const { password2, ...rest } = data;
             const dataToRegister = { ...rest };
-
-            const registerRequest = await authService.register(dataToRegister);
-            if (registerRequest) {
-                navigate("/", { state: { fromRegister: true }, replace: true });
-            }
+            await authService.register(dataToRegister);
             reset();
         } catch (error) {
-            // IMPLEMENTAR TOASTS
-            console.warn("Ha habido un problema Registrando al usuario");
+            console.error("Error during Register", error);
         } finally {
             setIsLoading(false);
+        }
+    }, []);
+
+    const onToggleVisibility = useCallback((inputName: string) => {
+        if (inputName === PasswordName.PASSWORD) {
+            setPassVisibility((prev) => ({ ...prev, password: !prev.password }));
+        }
+        if (inputName === PasswordName.PASSWORD2) {
+            setPassVisibility((prev) => ({ ...prev, password2: !prev.password2 }));
         }
     }, []);
 
@@ -265,75 +266,23 @@ export default function RegisterPage() {
         [autoRegisterPageContainerConfig]
     );
 
-    const currentFormContainerClasses = useMemo(
-        () =>
-            classNames(
-                {
-                    "flex flex-col": isMobile2Xs || isMobileXs || isMobileSm,
-                    "grid grid-cols-2": isTablet || isDesktop,
-                },
-                {
-                    "gap-4": isMobile2Xs || isMobileXs || isMobileSm,
-                    "gap-y-3 gap-x-5": isTablet || isDesktop,
-                }
-            ),
-        [isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop]
-    );
-
     return (
         <Container className={baseContainerClasses}>
             <section className={currentRegisterPageClasses}>
                 <h1>{t("pages.register_page.title")}</h1>
-                <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col gap-4">
-                    <div className={currentFormContainerClasses}>
-                        {REGISTER_FORM_FIELDS.map((field: RegisterFormField) => {
-                            const inputValue = watch(field.name);
-                            const hasText = !!(inputValue as string)?.length;
-                            const fieldName = field.name;
-                            const error = errors[fieldName];
-                            const isValid = !error && !!inputValue;
-
-                            return (
-                                <div key={field.name} className="flex flex-col gap-0.5">
-                                    <Input
-                                        {...field}
-                                        // label={field.label}
-                                        // type={field.type}
-                                        // name={field.name}
-                                        // placeholder={field.placeholder}
-                                        // validations={field.validations}
-                                        register={register}
-                                        isValid={isValid}
-                                        hasText={hasText}
-                                        toggleVisibility={toggleVisibility}
-                                        passwordMatch={passWordMatch}
-                                    />
-                                    {error?.message && (
-                                        <p className={baseErrorMessageClasses}>{error.message}</p>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-                    <div className="perfect-center self-center">
-                        <Controller
-                            name="avatar"
-                            defaultValue={DEFAULT_AVATAR}
-                            control={control}
-                            rules={{ required: "Selecciona un avatar" }}
-                            render={({ field }) => <AvatarSelector field={field} />}
-                        />
-                    </div>
-                    <LoadingButton
-                        type="submit"
-                        loading={isLoading}
-                        disabled={isLoading}
-                        variant="primary"
-                        loadingText={t("pages.register_page.register_button_loading")}
-                    >
-                        {t("pages.register_page.register_button")}
-                    </LoadingButton>
-                </form>
+                <FormComponent
+                    formType={FormType.REGISTER}
+                    formData={FORM_DATA}
+                    controllerData={CONTROLLER_DATA}
+                    registerHook={register}
+                    onFormSubmit={handleSubmit(onFormSubmit)}
+                    errorsHook={errors}
+                    onToggleVisibility={onToggleVisibility}
+                    watch={watch}
+                    submitText={t("pages.register_page.register_button")}
+                    loadingSubmitText={t("pages.register_page.register_button_loading")}
+                    isLoading={isLoading}
+                />
             </section>
         </Container>
     );

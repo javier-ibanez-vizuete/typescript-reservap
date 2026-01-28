@@ -36,14 +36,15 @@ function ProfileButton({ onClick }: ProfileButtonProps) {
         }
     }, [navigate, logout]);
     // FALTA METERLE LAS PROPIEDADES A AVATAR CUANDO CREE EL LOGIN
+    if (!user) return null;
     return (
         <Dropdown placement="bottom-end" onClick={onClick}>
             <DropdownTrigger variant="none" shadow={false}>
                 <Avatar
-                    // avatar={user?.avatar}
-                    // alt="Avatar"
-                    // online={user?.isActive}
-                    // fallback={user?.name}
+                    avatar={user?.avatar}
+                    alt="Avatar"
+                    online={user?.isActive}
+                    fallback={user?.name}
                     className="shadow-md"
                 />
             </DropdownTrigger>
