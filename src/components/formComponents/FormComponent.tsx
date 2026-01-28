@@ -9,11 +9,14 @@ import {
     type Path,
     type PathValue,
     type UseFormRegister,
+    type UseFormReset,
     type UseFormWatch,
 } from "react-hook-form";
 import { useDevice } from "../../hooks/useDevice";
+import { useTranslate } from "../../translations/useTranslate";
 import AvatarSelector from "../AvatarSelector";
 import LoadingButton from "../LoadingButton";
+import Button from "../UI/Button";
 import InputComponent from "./InputComponent";
 
 export enum PasswordName {
@@ -84,14 +87,16 @@ export type ControllerData<T extends FieldValues = FieldValues> = {
 };
 
 type FormComponentProps<T extends FieldValues> = {
-    formType: FormType;
     formData: FormData<T>[];
+    formType: FormType;
     controllerData?: ControllerData<T>[];
     registerHook: UseFormRegister<T>;
     onFormSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
     errorsHook: FieldErrors<T>;
     onToggleVisibility: (inputName: string) => void;
     watch: UseFormWatch<T>;
+    isDirty: boolean;
+    reset: UseFormReset<T>;
     submitText: string;
     loadingSubmitText: string;
     isLoading: boolean;
@@ -105,11 +110,14 @@ function FormComponent<T extends FieldValues>({
     errorsHook,
     onToggleVisibility,
     watch,
+    isDirty,
+    reset,
     submitText,
     loadingSubmitText,
     isLoading,
 }: FormComponentProps<T>) {
-    const { isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop } = useDevice();
+    const { isMobile2Xs, isMobileXs, isMobileSm, isMobile, isTablet, isDesktop } = useDevice();
+    const { t } = useTranslate();
 
     const password = watch(PasswordName.PASSWORD as Path<T>);
     const password2 = watch(PasswordName.PASSWORD2 as Path<T>);
@@ -129,6 +137,20 @@ function FormComponent<T extends FieldValues>({
         [isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop]
     );
 
+    const autoButtonsContainerConfig = useMemo(
+        () => ({
+            direction: classNames({
+                "flex-col": isMobile || isTablet,
+                "flex-row": isDesktop,
+            }),
+            gap: classNames({
+                "gap-2": isMobile || isTablet,
+                "gap-4": isDesktop,
+            }),
+        }),
+        [isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop]
+    );
+
     const currentFormContainerClasses = useMemo(
         () =>
             classNames(
@@ -136,6 +158,16 @@ function FormComponent<T extends FieldValues>({
                 autoFormContainerConfig?.gap ?? "gap-4"
             ),
         [autoFormContainerConfig?.display, autoFormContainerConfig?.gap]
+    );
+
+    const currentButtonsContainerClasses = useMemo(
+        () =>
+            classNames(
+                "flex justify-center",
+                autoButtonsContainerConfig?.direction ?? "flex-col",
+                autoButtonsContainerConfig?.gap ?? "gap-2"
+            ),
+        [autoButtonsContainerConfig?.direction]
     );
 
     return (
@@ -177,15 +209,23 @@ function FormComponent<T extends FieldValues>({
                     />
                 ))}
 
-            <LoadingButton
-                type="submit"
-                loading={isLoading}
-                disabled={isLoading}
-                variant="primary"
-                loadingText={loadingSubmitText}
-            >
-                {submitText}
-            </LoadingButton>
+            <div className={currentButtonsContainerClasses}>
+                <LoadingButton
+                    type="submit"
+                    loading={isLoading}
+                    disabled={isLoading}
+                    variant="primary"
+                    loadingText={loadingSubmitText}
+                    className="lg:flex-2"
+                >
+                    {submitText}
+                </LoadingButton>
+                {isDirty && (
+                    <Button className="lg:flex-1" variant="danger" onClick={() => reset()}>
+                        {t("components.form_component.reset_button")}
+                    </Button>
+                )}
+            </div>
         </form>
     );
 }

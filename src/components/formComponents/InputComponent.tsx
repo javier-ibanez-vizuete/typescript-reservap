@@ -139,7 +139,7 @@ function InputComponent<T extends FieldValues = FieldValues>({
                         {...registerHook(name, validations)}
                     />
                     {isPassword && (
-                        <Button onClick={handleToggleVisibility} className="absolute right-2">
+                        <Button onClick={handleToggleVisibility} variant="ghost" className="absolute right-2">
                             {type === InputType.PASSWORD && (
                                 <ImageContainer>
                                     <Image imageData={currentIconClosedEye} />

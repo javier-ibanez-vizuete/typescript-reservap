@@ -5,6 +5,9 @@
             "profile": "Perfil",
             "logout": "Cerrar sesión",
             "loggin_out": "Cerrando sesión"
+        },
+        "form_component": {
+            "reset_button": "Limpiar Formulario"
         }
     },
     "navbar": {

@@ -7,7 +7,7 @@ import FormComponent, {
     PasswordName,
     type ControllerData,
     type FormData,
-} from "../components/formComponent/FormComponent";
+} from "../components/formComponents/FormComponent";
 import { Container } from "../components/UI/Container";
 import { Theme, useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../core/auth/useAuth";
@@ -58,7 +58,7 @@ export function RegisterPage() {
         control,
         watch,
         reset,
-        formState: { errors },
+        formState: { errors, isDirty },
     } = useForm<FormFields>({
         mode: "onChange",
         defaultValues: FORM_DEFAULT_VALUES,
@@ -234,8 +234,8 @@ export function RegisterPage() {
             }),
             width: classNames({
                 "min-w-full": isMobile2Xs || isMobileXs || isMobileSm,
-                "min-w-tablet": isTablet,
-                "min-w-desktop": isDesktop,
+                "min-w-tablet max-w-[600px]": isTablet,
+                "min-w-desktop max-w-[840px]": isDesktop,
             }),
             background: classNames({
                 "bg-bg-alt": theme === Theme.LIGHT,
@@ -266,6 +266,8 @@ export function RegisterPage() {
         [autoRegisterPageContainerConfig]
     );
 
+    console.log("Render Register Page");
+
     return (
         <Container className={baseContainerClasses}>
             <section className={currentRegisterPageClasses}>
@@ -279,6 +281,8 @@ export function RegisterPage() {
                     errorsHook={errors}
                     onToggleVisibility={onToggleVisibility}
                     watch={watch}
+                    isDirty={isDirty}
+                    reset={reset}
                     submitText={t("pages.register_page.register_button")}
                     loadingSubmitText={t("pages.register_page.register_button_loading")}
                     isLoading={isLoading}
