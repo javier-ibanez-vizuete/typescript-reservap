@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { useToast } from "../../contexts/ToastsContext/ToastsContext";
+import { useToast } from "../../contexts/ToastsContext";
 import { getPositionStyle } from "./getPositionStyle";
 import { Toast } from "./Toast";
 

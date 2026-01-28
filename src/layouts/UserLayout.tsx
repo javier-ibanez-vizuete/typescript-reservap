@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { useMemo } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import { useTheme } from "../contexts/ThemeContext";
+import { Theme, useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../core/auth/useAuth";
 
 export function UserLayout() {
@@ -12,8 +12,8 @@ export function UserLayout() {
     const currentMainCongif = useMemo(
         () =>
             classNames("flex-1", {
-                "bg-bg text-text": theme === "light",
-                "bg-bg-dark text-text-dark": theme !== "light",
+                "bg-bg text-text": theme === Theme.LIGHT,
+                "bg-bg-dark text-text-dark": theme !== Theme.LIGHT,
             }),
         [theme]
     );

@@ -1,7 +1,7 @@
 import { useCallback, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useToast } from "../../contexts/ToastsContext/ToastsContext";
+import { useToast } from "../../contexts/ToastsContext";
 import { useTranslate } from "../../translations/useTranslate";
 import { loginApi, logoutApi, registerApi } from "./auth.api";
 import {
