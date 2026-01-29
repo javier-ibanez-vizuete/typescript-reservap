@@ -9,6 +9,7 @@ import FormComponent, {
 } from "../components/formComponents/FormComponent";
 import { Container } from "../components/UI/Container";
 import { Theme, useTheme } from "../contexts/ThemeContext";
+import { useAuth } from "../core/auth/useAuth";
 import { useDevice } from "../hooks/useDevice";
 import { useLoading } from "../hooks/useLoading";
 import { useTranslate } from "../translations/useTranslate";
@@ -43,6 +44,7 @@ export function LoginPage() {
         reset,
         formState: { errors, isDirty },
     } = useForm<FormFields>({ mode: "onChange", defaultValues: FORM_DEFAULT_VALUES });
+    const { login } = useAuth();
 
     const { isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop } = useDevice();
     const { isLoading, setIsLoading } = useLoading();
@@ -93,10 +95,10 @@ export function LoginPage() {
         },
     ];
 
-    const onFormSubmit: SubmitHandler<FormFields> = useCallback((data) => {
+    const onFormSubmit: SubmitHandler<FormFields> = useCallback(async (data) => {
         try {
             setIsLoading(true);
-            console.log("Sending data", data);
+            await login(data);
         } catch (error) {
             console.warn("Error during Login");
         } finally {

@@ -24,7 +24,8 @@ export type NavbarProps = {
     logoSize?: SizeType | "default";
 };
 
-const baseNavbarConfig = "flex flex-col w-full shadow-xl shrink-0 transition-all duration-500 ease-in-out";
+const baseNavbarConfig =
+    "flex flex-col w-full shadow-md z-1 shrink-0 transition-all duration-500 ease-in-out";
 const baseNavbarInnerConfig = "flex justify-between items-center";
 const baseNavbarMenuContainerConfig = "justify-center items-center overflow-hidden";
 const baseNavbarActionsConfig = "flex items-center lg:gap-sm";

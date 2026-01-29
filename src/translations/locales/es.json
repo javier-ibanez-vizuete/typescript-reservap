@@ -93,6 +93,31 @@
                 "login_successfully": "Sesión iniciada correctamente",
                 "login_error": "Fallo en el inicio de sesion"
             }
+        },
+        "home_page": {
+            "title": "Pagina Principal",
+            "cta_data": {
+                "login": {
+                    "title": "Bienvenido de nuevo",
+                    "description": "Inicia sesión para gestionar tus pedidos y reservas.",
+                    "button_text": "Iniciar sesión"
+                },
+                "menu": {
+                    "title": "Consulta nuestro Menú",
+                    "description": "Explora nuestra selección completa de platos y bebidas.",
+                    "button_text": "Ver menú"
+                },
+                "bookings": {
+                    "title": "Reserva tu mesa",
+                    "description": "Elige tu fecha y hora, y guardaremos tu sitio.",
+                    "button_text": "Reservar ahora"
+                },
+                "orders": {
+                    "title": "¿Tienes hambre?",
+                    "description": "Disfruta de nuestros mejores platos desde casa.",
+                    "button_text": "Pedir ahora"
+                }
+            }
         }
     }
 }

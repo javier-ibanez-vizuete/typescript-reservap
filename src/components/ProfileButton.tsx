@@ -57,6 +57,7 @@ function ProfileButton({ onClick }: ProfileButtonProps) {
                     loadingText={t("components.profile_button.loggin_out")}
                     variant="danger"
                     onClick={handleLogout}
+                    className="whitespace-nowrap"
                 >
                     {t("components.profile_button.logout")}
                 </LoadingButton>
