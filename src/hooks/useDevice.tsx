@@ -8,7 +8,7 @@ export const useDevice = () => {
         () => ({
             isMobile2Xs: width < 375,
             isMobileXs: width >= 375 && width < 425,
-            isMobileSm: width >= 414 && width < 768,
+            isMobileSm: width >= 425 && width < 768,
             isMobile: width < 768,
             isTablet: width >= 768 && width < 1024,
             isDesktop: width >= 1024,
