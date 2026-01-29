@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useMemo, type ReactNode } from "react";
+import { useMemo, type HTMLAttributes, type ReactNode } from "react";
 import { useDevice } from "../../hooks/useDevice";
 import type { SizeType } from "../../types/index.type";
 
@@ -9,11 +9,11 @@ export type ContainerProps = {
     padding?: SizeType;
     width?: SizeType | "default";
     className?: string;
-};
+} & HTMLAttributes<HTMLDivElement>;
 
 const base = "flex flex-1 xl:mx-auto";
 
-export function Container({ children, direction, padding, width, className = "" }: ContainerProps) {
+export function Container({ children, direction, padding, width, className = "", ...props }: ContainerProps) {
     const { isMobile2Xs, isMobileXs, isMobileSm, isTablet, isDesktop } = useDevice();
 
     const variantsDirection = {
@@ -62,5 +62,9 @@ export function Container({ children, direction, padding, width, className = "" 
         [direction, padding, width, className, autoConfig]
     );
 
-    return <div className={currentContainerClasses}>{children}</div>;
+    return (
+        <div className={currentContainerClasses} {...props}>
+            {children}
+        </div>
+    );
 }
