@@ -187,10 +187,10 @@
 
 @layer components {
     h1 {
-        @apply font-title font-semibold 2xs:text-3xl/[125%] xs:text-4xl/[125%] md:text-5xl/[125%] text-center xl:text-6xl;
+        @apply font-title font-semibold 2xs:text-3xl/[125%] xs:text-4xl/[125%] md:text-5xl/[125%] text-center xl:text-6xl/[125%];
     }
     h2 {
-        @apply font-title font-semibold 2xs:text-xl xs:text-2xl md:text-3xl xl:text-4xl;
+        @apply font-title font-semibold 2xs:text-2xl xs:text-3xl md:text-4xl xl:text-5xl;
     }
     h3 {
         @apply font-title font-semibold 2xs:text-xl xs:text-2xl md:text-3xl xl:text-4xl;

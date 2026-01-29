@@ -3,6 +3,7 @@ import { memo, useMemo } from "react";
 import { Theme, useTheme } from "../../contexts/ThemeContext";
 import { useDevice } from "../../hooks/useDevice";
 import type { ImageSourceType } from "../../types/index.type";
+import CTAContent from "./CTAContent";
 import CTAImage from "./CTAImage";
 
 export enum CTAImagePosition {
@@ -25,7 +26,8 @@ type CTACardProps = {
     redirectTo: string; // Hacer un enum con las posiciones
 };
 
-const baseCardContainerClasses = "shadow-md overflow-hidden transition-shadow duration-500 hover:shadow-lg";
+const baseCardContainerClasses =
+    "shadow-md overflow-hidden transition-shadow duration-500 lg:hover:shadow-xl";
 const baseGridClasses = "grid grid-cols-1 md:grid-cols-2";
 
 function CTACard({
@@ -74,7 +76,7 @@ function CTACard({
                 variantBackgroundConfig[variant] || variantBackgroundConfig.accent,
                 autoRoundedConfig || "rounded-lg"
             ),
-        [variant, autoRoundedConfig]
+        [variant, autoRoundedConfig, variantBackgroundConfig]
     );
 
     const currentImageClasses = useMemo(
@@ -89,13 +91,16 @@ function CTACard({
     return (
         <article className={currentCardContainerClasses}>
             <div className={baseGridClasses}>
-                <CTAImage src={imageSrc} alt={imageAlt} />
-                <div>CONTENIDO</div>
+                <CTAImage src={imageSrc} alt={imageAlt} className={currentImageClasses} />
+                <CTAContent
+                    title={title}
+                    description={description}
+                    buttonText={buttonText}
+                    redirectTo={redirectTo}
+                />
             </div>
         </article>
     );
 }
 
 export default memo(CTACard);
-
-// TODO: IMPLEMENTAR EL COMPONENTE CTAContent dentor de CTACard

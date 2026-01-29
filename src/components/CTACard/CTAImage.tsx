@@ -4,6 +4,7 @@ import { useDevice } from "../../hooks/useDevice";
 import type { ImageSourceType } from "../../types/index.type";
 import Image from "../UI/Image";
 import ImageContainer from "../UI/ImageContainer";
+
 type CTAImageProps = {
     src: string;
     imageData?: ImageSourceType;
@@ -11,8 +12,9 @@ type CTAImageProps = {
     className?: string;
 };
 
-const baseCTAImageClasses = "relative";
-const baseImageClasses = "absolute inset-0 object-cover";
+const baseCTAImageClasses = "relative flex flex-col overflow-hidden";
+const baseImageContainerClasses = "flex-1";
+const baseImageClasses = "object-cover h-full";
 const baseBackgroundDivClasses = "absolute inset-0 bg-gradient-to-b from-black/60 to-transparent md:hidden";
 
 function CTAImage({ src, imageData, alt, className }: CTAImageProps) {
@@ -23,7 +25,7 @@ function CTAImage({ src, imageData, alt, className }: CTAImageProps) {
             classNames(
                 baseCTAImageClasses,
                 {
-                    "h-20": isMobile,
+                    "h-50": isMobile,
                     "h-auto": !isMobile,
                 },
                 className
@@ -34,7 +36,7 @@ function CTAImage({ src, imageData, alt, className }: CTAImageProps) {
     if (imageData)
         return (
             <div className={currentCTAImageClasses}>
-                <ImageContainer>
+                <ImageContainer className={baseImageContainerClasses}>
                     <Image imageData={imageData} className={baseImageClasses} />
                 </ImageContainer>
                 <div className={baseBackgroundDivClasses} />
@@ -42,7 +44,7 @@ function CTAImage({ src, imageData, alt, className }: CTAImageProps) {
         );
     return (
         <div className={currentCTAImageClasses}>
-            <ImageContainer>
+            <ImageContainer className={baseImageContainerClasses}>
                 <Image src={src} alt={alt} className={baseImageClasses} />
             </ImageContainer>
             <div className={baseBackgroundDivClasses} />
