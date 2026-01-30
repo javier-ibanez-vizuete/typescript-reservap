@@ -19,6 +19,6 @@ export const useDevice = () => {
     return deviceBreakPoints;
 };
 
-type DeviceBreakpoints = ReturnType<typeof useDevice>;
+export type DeviceBreakpoints = ReturnType<typeof useDevice>;
 
 export type MobileSizeDevice = keyof DeviceBreakpoints;

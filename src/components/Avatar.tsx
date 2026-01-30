@@ -83,13 +83,14 @@ function Avatar({
     const processImageSrc = useCallback((url: string) => {
         if (!url) return null;
 
-        if (url.startsWith("data:image/")) {
-            return url;
-        }
+        if (url.startsWith("data:image/")) return url;
 
-        if (url.length > 100 && !url.startsWith("http") && !url.startsWith("/")) {
-            return `data:image/jpeg;base64,${url}`;
-        }
+        if (url.startsWith("http") || url.startsWith("/") || url.startsWith("./") || url.startsWith("../"))
+            return url;
+
+        const isBase64 = /^[A-Za-z0-9+/]*={0,2}$/.test(url);
+
+        if (isBase64 && url.length > 30) return `data:image/jpeg;base64,${url}`;
 
         return url;
     }, []);
@@ -139,7 +140,7 @@ function Avatar({
                     <ImageContainer className="flex-1">
                         <Image
                             src={imageSrc}
-                            alt={alt}
+                            alt={alt ? alt : avatar?.alt}
                             className="object-cover rounded-full"
                             onError={handleImageError}
                         />

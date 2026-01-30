@@ -25,12 +25,12 @@ function Image({
 }: ImageComponentProps) {
     const currentImageConfig = useMemo(() => classNames(baseImageConfig, className), [className]);
 
-    if (src)
+    if (src && src.trim())
         return (
             <img
                 className={currentImageConfig}
                 src={src}
-                alt={alt}
+                alt={alt && alt.trim() ? alt : "Image"}
                 onLoad={onLoad}
                 onError={onError}
                 loading={loading}
