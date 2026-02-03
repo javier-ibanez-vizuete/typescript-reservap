@@ -27,7 +27,7 @@ export interface ImageSourceType {
     png?: string;
 
     url: string;
-    alt: string
+    alt?: string
 }
 
 export type Trigger = "click" | "hover";
