@@ -35,7 +35,6 @@ function ProfileButton({ onClick }: ProfileButtonProps) {
             navigate("/");
         }
     }, [navigate, logout]);
-    // FALTA METERLE LAS PROPIEDADES A AVATAR CUANDO CREE EL LOGIN
     if (!user) return null;
     return (
         <Dropdown placement="bottom-end" onClick={onClick}>

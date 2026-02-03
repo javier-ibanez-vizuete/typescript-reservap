@@ -26,7 +26,7 @@ function LoadingButton({
     disabled = false,
     variant = "default",
     size,
-    loadingText = "Cargando...",
+    loadingText = "Loading...",
     className = "",
     onClick,
     type = "button",

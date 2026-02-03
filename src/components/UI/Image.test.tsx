@@ -3,19 +3,6 @@ import { render, screen } from "../../test/test-utils";
 import type { ImageSourceType } from "../../types/index.type";
 import Image from "./Image";
 
-/**
- * Suite de tests para el componente Image
- *
- * Este archivo testea:
- * - Renderizado con src simple
- * - Renderizado con imageData (responsive images)
- * - Callbacks (onLoad, onError)
- * - Props de accesibilidad (alt)
- * - Lazy loading
- * - Diferentes formatos de imagen (avif, webp, png)
- * - Media queries responsive
- * - Casos extremos
- */
 describe("Image Component", () => {
     // ============================================
     // SETUP Y DATOS DE PRUEBA
