@@ -40,7 +40,7 @@ function AvatarSelector<T extends FieldValues = FieldValues>({ field }: AvatarSe
     const direction = isDesktop || isTablet ? "row" : "col";
 
     return (
-        <Dropdown className="justify-center" placement="top-center">
+        <Dropdown className="justify-center self-center" placement="top-center">
             <DropdownTrigger variant="none" shadow={false}>
                 <ImageContainer size={autoBigSizeConfig ?? ""}>
                     <Image imageData={field.value} className="rounded-md" />
