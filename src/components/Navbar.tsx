@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState, type HTMLAttributes } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../core/auth/useAuth";
@@ -22,7 +22,7 @@ export type NavbarProps = {
     height?: SizeType | "default";
     padding?: SizeType | "default" | "none";
     logoSize?: SizeType | "default";
-};
+} & HTMLAttributes<HTMLElement>;
 
 const baseNavbarConfig =
     "flex flex-col w-full shadow-md z-1 shrink-0 transition-all duration-500 ease-in-out";
@@ -36,7 +36,7 @@ const baseMobileMenuConfig =
 const baseLogoConfig = "perfect-center cursor-pointer gap-xs md:gap-sm";
 const baseLogoIcon = "flex-1 max-w-8 hover:scale-105 transition-transform duration-slow ease-in-out";
 
-function Navbar({ height, padding, logoSize }: NavbarProps) {
+function Navbar({ height, padding, logoSize, ...props }: NavbarProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const mobileNavRef = useRef<HTMLDivElement | null>(null);
 
@@ -141,14 +141,19 @@ function Navbar({ height, padding, logoSize }: NavbarProps) {
         () =>
             classNames(
                 baseNavbarInnerConfig,
-                height ? variantsHeight[height ?? "default"] : autoConfig?.height,
-                padding ? variantsPadding[padding ?? "default"] : autoConfig?.padding
+                height?.trim() ? variantsHeight[height] || variantsHeight["default"] : autoConfig?.height,
+                padding?.trim() ? variantsPadding[padding] || variantsPadding["default"] : autoConfig?.padding
             ),
         [height, padding, autoConfig?.height, autoConfig?.padding]
     );
 
     const currentLogoSize = useMemo(
-        () => classNames(logoSize ? variantsLogoSize[logoSize ?? "default"] : autoConfig.logoSize),
+        () =>
+            classNames(
+                logoSize?.trim()
+                    ? variantsLogoSize[logoSize] || variantsLogoSize["default"]
+                    : autoConfig.logoSize
+            ),
         [logoSize]
     );
 
@@ -178,7 +183,7 @@ function Navbar({ height, padding, logoSize }: NavbarProps) {
     );
 
     return (
-        <nav className={currentNavbarConfig}>
+        <nav className={currentNavbarConfig} {...props}>
             <Container>
                 <div className={currentNavbarInnerConfig}>
                     <Link className={baseLogoConfig} to={"/"}>
