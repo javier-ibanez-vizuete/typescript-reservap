@@ -183,7 +183,7 @@ function Navbar({ height, padding, logoSize, ...props }: NavbarProps) {
     );
 
     return (
-        <nav className={currentNavbarConfig} {...props}>
+        <nav className={currentNavbarConfig} aria-label="Main Navigation" {...props}>
             <Container>
                 <div className={currentNavbarInnerConfig}>
                     <Link className={baseLogoConfig} to={"/"}>

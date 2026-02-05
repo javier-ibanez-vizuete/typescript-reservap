@@ -36,11 +36,10 @@ function NavbarLinks({ tabAccess, className, handleLinkClick }: NavbarLinksProps
     );
 
     const currentNavbarLinksConfig = useMemo(
-        () => classNames(baseNavbarLinksConfig, autoConfig?.ulStyle, className),
-        [autoConfig?.ulStyle]
+        () => classNames(baseNavbarLinksConfig, autoConfig?.ulStyle || "flex-col", className),
+        [autoConfig?.ulStyle, className]
     );
 
-    // if (!isLoggedIn) return null;
     return (
         <ul className={currentNavbarLinksConfig}>
             {NAV_LINKS.map((link) => (
