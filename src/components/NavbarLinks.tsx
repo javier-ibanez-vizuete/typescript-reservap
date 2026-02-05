@@ -6,13 +6,14 @@ import { useDevice } from "../hooks/useDevice";
 import { useTranslate } from "../translations/useTranslate";
 
 export type NavbarLinksProps = {
+    tabAccess: boolean;
     className?: string;
     handleLinkClick?: () => void;
 };
 
 const baseNavbarLinksConfig = "flex flex-1 self-stretch 2xs:gap-xs xs:gap-sm";
 
-function NavbarLinks({ className, handleLinkClick }: NavbarLinksProps) {
+function NavbarLinks({ tabAccess, className, handleLinkClick }: NavbarLinksProps) {
     const { isMobile, isTablet, isDesktop } = useDevice();
     const { t } = useTranslate();
     const { theme } = useTheme();
@@ -45,6 +46,7 @@ function NavbarLinks({ className, handleLinkClick }: NavbarLinksProps) {
             {NAV_LINKS.map((link) => (
                 <li className="perfect-center" key={link?.to}>
                     <NavLink
+                        tabIndex={tabAccess ? 0 : -1}
                         to={link?.to}
                         onClick={handleLinkClick}
                         className={({ isActive }: NavLinkRenderProps) =>

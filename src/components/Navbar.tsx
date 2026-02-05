@@ -168,7 +168,7 @@ function Navbar({ height, padding, logoSize, ...props }: NavbarProps) {
                 hidden: isMobile || isTablet,
                 "flex self-stretch flex-1": !isMobile && !isTablet,
             }),
-        [isMobile, isTablet]
+        [isMobile, isTablet, isDesktop]
     );
 
     const currentMobileMenuConfig = useMemo(
@@ -193,15 +193,18 @@ function Navbar({ height, padding, logoSize, ...props }: NavbarProps) {
                         {isLoggedIn && !isMobile && <h3>ReservApp</h3>}
                     </Link>
                     {isLoggedIn && (
-                        <div className={currentNavbarMenuContainerConfig}>
-                            <NavbarLinks handleLinkClick={handleLinkClick} />
+                        <div className={currentNavbarMenuContainerConfig} data-testid="desktop-navbar-links">
+                            <NavbarLinks tabAccess={isLoggedIn && isDesktop} />
                         </div>
                     )}
                     <div className={baseNavbarActionsConfig}>
                         <ThemeButton />
                         <LanguagesSelector placement="bottom-end" onClick={handleCloseMobileMenu} />
                         {!isLoggedIn && (
-                            <div className="perfect-center self-center gap-xs lg:gap-sm">
+                            <div
+                                className="perfect-center self-center gap-xs lg:gap-sm"
+                                data-testid="loging-navbar-buttons-container"
+                            >
                                 <Button onClick={handleLogin} variant="primary" className="whitespace-nowrap">
                                     {t("navbar.login_button")}
                                 </Button>
@@ -218,7 +221,8 @@ function Navbar({ height, padding, logoSize, ...props }: NavbarProps) {
                                     )}
                                 </div>
                                 <div
-                                    className={`flex flex-col lg:hidden ${autoConfig?.height} ${autoConfig?.padding}`}
+                                    className={`flex flex-col lg:hidden lg:opacity-0 ${autoConfig?.height} ${autoConfig?.padding}`}
+                                    data-testid="mobile-burger-button-container"
                                 >
                                     <BurgerButton
                                         isMobileMenuOpen={isMenuOpen}
@@ -229,8 +233,16 @@ function Navbar({ height, padding, logoSize, ...props }: NavbarProps) {
                         )}
                     </div>
                 </div>
-                <div ref={mobileNavRef} className={currentMobileMenuConfig}>
-                    <NavbarLinks handleLinkClick={handleLinkClick} />
+                <div
+                    ref={mobileNavRef}
+                    className={currentMobileMenuConfig}
+                    data-testid="mobile-navbar-links"
+                    aria-hidden={!isMenuOpen}
+                >
+                    <NavbarLinks
+                        tabAccess={isMenuOpen && !isDesktop}
+                        handleLinkClick={isMobile || isTablet ? handleLinkClick : undefined}
+                    />
                 </div>
             </Container>
         </nav>
