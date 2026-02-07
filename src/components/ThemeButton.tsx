@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import { useMemo, type ButtonHTMLAttributes } from "react";
-import { useTheme, type Theme } from "../contexts/ThemeContext";
+import { useCallback, useMemo, type ButtonHTMLAttributes, type KeyboardEvent } from "react";
+import { Theme, useTheme } from "../contexts/ThemeContext";
 import { useDevice } from "../hooks/useDevice";
 import type { DeviceSizeType, SizeTypeFull } from "../types/index.type";
 
@@ -13,22 +13,39 @@ export const ThemeButton = ({ className = "", margin, ...props }: ThemeButtonPro
     const { theme, onToggleTheme } = useTheme();
     const sizesDevice = useDevice();
 
-    const handleClick = () => {
+    const handleClick = useCallback(() => {
         onToggleTheme?.();
-    };
+    }, [onToggleTheme]);
 
-    const isDarkTheme = theme === "dark";
+    const handleKeyDown = useCallback(
+        (event: KeyboardEvent) => {
+            if (event.key === " ") {
+                event.preventDefault();
+                handleClick();
+            }
+            if (event.key === "Enter") handleClick();
+        },
+        [handleClick]
+    );
+
+    const isDarkTheme = theme === Theme.DARK;
 
     return (
         <div
             className={getContainerClasses(className, theme, sizesDevice, margin)}
             onClick={handleClick}
             role="button"
+            tabIndex={0}
+            aria-label={`Switch theme from ${theme} to ${isDarkTheme ? "light" : "dark"}`}
+            onKeyDown={handleKeyDown}
+            data-testid="theme-button"
         >
             <button
                 className={getButtonClasses()}
                 aria-label={getAriaLabel(theme, isDarkTheme)}
                 title={`Currently ${theme} theme. Click to toggle.`}
+                role="none"
+                tabIndex={-1}
                 {...props}
             >
                 {renderThemeIcon(isDarkTheme, sizesDevice)}
