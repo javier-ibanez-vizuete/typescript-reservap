@@ -20,8 +20,8 @@ function Spinner({ size = "md", color = "primary", className = "", ...props }: S
     };
 
     const colorClasses: Record<VariantTypeColor, string> = {
-        primary: "text-primary-color",
-        secondary: "text-secondary-color",
+        primary: "text-primary",
+        secondary: "text-secondary",
         white: "text-white",
         gray: "text-gray-500",
         success: "text-green-500",
@@ -40,7 +40,7 @@ function Spinner({ size = "md", color = "primary", className = "", ...props }: S
             fill="none"
             viewBox="0 0 24 24"
             role="status"
-            aria-label="Cargando"
+            aria-label="Loading"
             {...props}
         >
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
