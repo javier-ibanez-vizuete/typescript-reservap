@@ -13,7 +13,6 @@ export type DropdownMenuProps = {
     placement?: string;
     variant?: VariantType | "background" | "accent";
     padding?: SizeTypeFull;
-    // padding?: Omit<SizeTypeFull, "none">;
     gap?: SizeTypeFull;
     rounded?: SizeTypeFull;
     className?: string;
@@ -28,7 +27,7 @@ const baseContainerItemsClasses = "flex flex-1 min-h-0 overflow-y-auto overflow-
 function DropdownMenu({
     children,
 
-    isOpen,
+    isOpen = false,
 
     onClose,
 
@@ -97,7 +96,7 @@ function DropdownMenu({
     const variantConfig: Record<VariantType | "background" | "accent", string> = useMemo(
         () => ({
             default: classNames("shadow-sm border lg:hover:shadow-md", {
-                "bg-bg border-green-300 shadow-text/40": theme === "light",
+                "bg-bg border-gray-300 shadow-text/40": theme === "light",
                 "bg-bg-dark border-gray-3 shadow-text-dark/40": theme !== "light",
             }),
             primary: classNames("shadow-sm border lg:hover:shadow-md", {
@@ -198,9 +197,13 @@ function DropdownMenu({
         () =>
             classNames(
                 baseMenuClasses,
-                variant ? variantConfig[variant ?? "default"] : autoConfig?.color,
-                padding ? variantsPadding[padding ?? "default"] : autoConfig?.padding,
-                rounded ? variantsRounded[rounded ?? "default"] : autoConfig?.rounded,
+                variant?.trim() ? variantConfig[variant] || variantConfig["default"] : autoConfig?.color,
+                padding?.trim()
+                    ? variantsPadding[padding] || variantsPadding["default"]
+                    : autoConfig?.padding,
+                rounded?.trim()
+                    ? variantsRounded[rounded] || variantsRounded["default"]
+                    : autoConfig?.rounded,
                 placement,
                 className
             ),
@@ -212,7 +215,7 @@ function DropdownMenu({
             classNames(
                 baseContainerItemsClasses,
                 containerItemHeightConfig,
-                gap ? variantsGap[gap ?? "default"] : autoConfig?.gap,
+                gap?.trim() ? variantsGap[gap] || variantsGap["default"] : autoConfig?.gap,
                 {
                     "overflow-hidden": !isOpen,
                     "flex-col": direction === "col",
@@ -229,6 +232,7 @@ function DropdownMenu({
             ref={containerRef}
             className={currentMenuClasses}
             role="menu"
+            data-state={isOpen && "open"}
             style={{
                 display: "none",
                 visibility: "hidden",

@@ -66,14 +66,14 @@ export const DropdownTrigger = forwardRef<HTMLDivElement, DropdownTriggerProps>(
                 },
                 primary: {
                     classes:
-                        "bg-admin-primary-color border border-admin-primary-color/90 shadow-sm hover:bg-admin-primary-color/90 focus:ring-admin-primary-color",
+                        "bg-primary border border-primary/90 shadow-sm hover:bg-primary/90 focus:ring-primary",
                     hasHoverEffects: true,
                     hasActiveEffects: true,
                     shadowColor: "hover:shadow-admin-primary-color/25",
                 },
                 secondary: {
                     classes:
-                        "bg-admin-secondary-color border border-admin-secondary-color/90 shadow-sm hover:bg-admin-secondary-color/90 focus:ring-admin-secondary-color",
+                        "bg-secondary border border-secondary/90 shadow-sm hover:bg-secondary/90 focus:ring-secondary",
                     hasHoverEffects: true,
                     hasActiveEffects: true,
                     shadowColor: "hover:shadow-admin-secondary-color/25",
@@ -98,7 +98,7 @@ export const DropdownTrigger = forwardRef<HTMLDivElement, DropdownTriggerProps>(
                     shadowColor: "hover:shadow-error-600/25",
                 },
                 none: {
-                    classes: "",
+                    classes: " ",
                     hasHoverEffects: false,
                     hasActiveEffects: true,
                     shadowColor: null,
@@ -141,9 +141,9 @@ export const DropdownTrigger = forwardRef<HTMLDivElement, DropdownTriggerProps>(
                     "px-3 py-1.5": isTablet || isDesktop,
                 }),
                 variant: classNames("border active:scale-95 active:shadow-md", {
-                    "bg-admin-accent-background border-admin-accent-background/90 lg:hover:bg-admin-accent-background/90 lg:focus:ring-admin-accent-background-dark":
+                    "bg-bg-alt border-bg-alt/90 lg:hover:bg-bg-alt/90 lg:focus:ring-bg-alt":
                         theme === "light",
-                    "bg-admin-accent-background-dark border-admin-accent-background-dark/90 lg:hover:bg-admin-accent-background-dark/90 lg:focus:ring-admin-accent-background":
+                    "bg-bg-alt-dark border-bg-alt-dark/90 lg:hover:bg-bg-alt-dark/90 lg:focus:ring-bg-alt-dark":
                         theme !== "light",
                 }),
                 rounded: classNames({
@@ -158,19 +158,31 @@ export const DropdownTrigger = forwardRef<HTMLDivElement, DropdownTriggerProps>(
             () =>
                 classNames(
                     baseTriggerClasses,
-                    variant ? variantsConfig[variant ?? "default"].classes : autoConfig?.variant,
-                    padding ? variantsPadding[padding] : autoConfig?.padding,
-                    rounded ? variantsRounded[rounded] : autoConfig?.rounded,
+                    variant?.trim()
+                        ? variantsConfig[variant]?.classes || variantsConfig["default"].classes
+                        : autoConfig?.variant,
+                    padding?.trim()
+                        ? variantsPadding[padding] || variantsPadding["default"]
+                        : autoConfig?.padding,
+                    rounded?.trim()
+                        ? variantsRounded[rounded] || variantsRounded["default"]
+                        : autoConfig?.rounded,
+                    shadow &&
+                        variant &&
+                        variantsConfig[variant]?.shadowColor &&
+                        variantsConfig[variant].shadowColor,
                     {
                         "opacity-50 cursor-not-allowed pointer-events-none": disabled,
                         "lg:hover:shadow-xl":
-                            !disabled && shadow && variantsConfig[variant || "default"]?.hasHoverEffects,
+                            !disabled &&
+                            shadow &&
+                            variantsConfig[variant ? variant : "default"]?.hasHoverEffects,
                         "active:scale-95 active:shadow-lg":
-                            !disabled && variantsConfig[variant || "default"]?.hasActiveEffects,
+                            !disabled && variantsConfig[variant ? variant : "default"]?.hasActiveEffects,
                     },
                     className
                 ),
-            [variant, padding, rounded, autoConfig, disabled, shadow]
+            [variant, padding, rounded, autoConfig, disabled, shadow, baseTriggerClasses, className]
         );
 
         return (
@@ -180,7 +192,7 @@ export const DropdownTrigger = forwardRef<HTMLDivElement, DropdownTriggerProps>(
                 className={currentClasses}
                 role="button"
                 tabIndex={disabled ? -1 : 0}
-                aria-disabled={disabled}
+                aria-disabled={disabled ?? false}
                 data-state={isOpen ? "open" : "closed"}
                 {...props}
             >
@@ -190,5 +202,3 @@ export const DropdownTrigger = forwardRef<HTMLDivElement, DropdownTriggerProps>(
         );
     }
 );
-
-DropdownTrigger.displayName = "AdminDropdownTrigger";

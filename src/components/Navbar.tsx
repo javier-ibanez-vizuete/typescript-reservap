@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState, type HTMLAttributes } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../core/auth/useAuth";
@@ -22,7 +22,7 @@ export type NavbarProps = {
     height?: SizeType | "default";
     padding?: SizeType | "default" | "none";
     logoSize?: SizeType | "default";
-};
+} & HTMLAttributes<HTMLElement>;
 
 const baseNavbarConfig =
     "flex flex-col w-full shadow-md z-1 shrink-0 transition-all duration-500 ease-in-out";
@@ -36,7 +36,7 @@ const baseMobileMenuConfig =
 const baseLogoConfig = "perfect-center cursor-pointer gap-xs md:gap-sm";
 const baseLogoIcon = "flex-1 max-w-8 hover:scale-105 transition-transform duration-slow ease-in-out";
 
-function Navbar({ height, padding, logoSize }: NavbarProps) {
+function Navbar({ height, padding, logoSize, ...props }: NavbarProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const mobileNavRef = useRef<HTMLDivElement | null>(null);
 
@@ -141,14 +141,19 @@ function Navbar({ height, padding, logoSize }: NavbarProps) {
         () =>
             classNames(
                 baseNavbarInnerConfig,
-                height ? variantsHeight[height ?? "default"] : autoConfig?.height,
-                padding ? variantsPadding[padding ?? "default"] : autoConfig?.padding
+                height?.trim() ? variantsHeight[height] || variantsHeight["default"] : autoConfig?.height,
+                padding?.trim() ? variantsPadding[padding] || variantsPadding["default"] : autoConfig?.padding
             ),
         [height, padding, autoConfig?.height, autoConfig?.padding]
     );
 
     const currentLogoSize = useMemo(
-        () => classNames(logoSize ? variantsLogoSize[logoSize ?? "default"] : autoConfig.logoSize),
+        () =>
+            classNames(
+                logoSize?.trim()
+                    ? variantsLogoSize[logoSize] || variantsLogoSize["default"]
+                    : autoConfig.logoSize
+            ),
         [logoSize]
     );
 
@@ -163,7 +168,7 @@ function Navbar({ height, padding, logoSize }: NavbarProps) {
                 hidden: isMobile || isTablet,
                 "flex self-stretch flex-1": !isMobile && !isTablet,
             }),
-        [isMobile, isTablet]
+        [isMobile, isTablet, isDesktop]
     );
 
     const currentMobileMenuConfig = useMemo(
@@ -178,7 +183,7 @@ function Navbar({ height, padding, logoSize }: NavbarProps) {
     );
 
     return (
-        <nav className={currentNavbarConfig}>
+        <nav className={currentNavbarConfig} aria-label="Main Navigation" {...props}>
             <Container>
                 <div className={currentNavbarInnerConfig}>
                     <Link className={baseLogoConfig} to={"/"}>
@@ -188,15 +193,18 @@ function Navbar({ height, padding, logoSize }: NavbarProps) {
                         {isLoggedIn && !isMobile && <h3>ReservApp</h3>}
                     </Link>
                     {isLoggedIn && (
-                        <div className={currentNavbarMenuContainerConfig}>
-                            <NavbarLinks handleLinkClick={handleLinkClick} />
+                        <div className={currentNavbarMenuContainerConfig} data-testid="desktop-navbar-links">
+                            <NavbarLinks tabAccess={isLoggedIn && isDesktop} />
                         </div>
                     )}
                     <div className={baseNavbarActionsConfig}>
                         <ThemeButton />
                         <LanguagesSelector placement="bottom-end" onClick={handleCloseMobileMenu} />
                         {!isLoggedIn && (
-                            <div className="perfect-center self-center gap-xs lg:gap-sm">
+                            <div
+                                className="perfect-center self-center gap-xs lg:gap-sm"
+                                data-testid="loging-navbar-buttons-container"
+                            >
                                 <Button onClick={handleLogin} variant="primary" className="whitespace-nowrap">
                                     {t("navbar.login_button")}
                                 </Button>
@@ -213,7 +221,8 @@ function Navbar({ height, padding, logoSize }: NavbarProps) {
                                     )}
                                 </div>
                                 <div
-                                    className={`flex flex-col lg:hidden ${autoConfig?.height} ${autoConfig?.padding}`}
+                                    className={`flex flex-col lg:hidden lg:opacity-0 ${autoConfig?.height} ${autoConfig?.padding}`}
+                                    data-testid="mobile-burger-button-container"
                                 >
                                     <BurgerButton
                                         isMobileMenuOpen={isMenuOpen}
@@ -224,8 +233,16 @@ function Navbar({ height, padding, logoSize }: NavbarProps) {
                         )}
                     </div>
                 </div>
-                <div ref={mobileNavRef} className={currentMobileMenuConfig}>
-                    <NavbarLinks handleLinkClick={handleLinkClick} />
+                <div
+                    ref={mobileNavRef}
+                    className={currentMobileMenuConfig}
+                    data-testid="mobile-navbar-links"
+                    aria-hidden={!isMenuOpen}
+                >
+                    <NavbarLinks
+                        tabAccess={isMenuOpen && !isDesktop}
+                        handleLinkClick={isMobile || isTablet ? handleLinkClick : undefined}
+                    />
                 </div>
             </Container>
         </nav>

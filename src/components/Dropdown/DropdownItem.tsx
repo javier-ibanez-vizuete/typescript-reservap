@@ -75,7 +75,13 @@ function DropdownItem({
 
     const currentItemClasses = useMemo(
         () =>
-            classNames(baseItemClasses, padding ? variantsPadding[padding] : autoConfig?.padding, className),
+            classNames(
+                baseItemClasses,
+                padding?.trim()
+                    ? variantsPadding[padding] || variantsPadding["default"]
+                    : autoConfig?.padding,
+                className
+            ),
         [baseItemClasses, padding, autoConfig?.padding, className]
     );
 

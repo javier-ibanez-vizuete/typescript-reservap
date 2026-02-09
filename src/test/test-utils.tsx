@@ -3,14 +3,17 @@ import type { ReactElement } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "../contexts/AuthContext";
 import { ThemeProvider } from "../contexts/ThemeContext";
+import { ToastsProvider } from "../contexts/ToastsContext";
 import "../translations/i18n";
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
     return (
         <BrowserRouter>
-            <AuthProvider>
-                <ThemeProvider>{children}</ThemeProvider>
-            </AuthProvider>
+            <ToastsProvider>
+                <AuthProvider>
+                    <ThemeProvider>{children}</ThemeProvider>
+                </AuthProvider>
+            </ToastsProvider>
         </BrowserRouter>
     );
 };

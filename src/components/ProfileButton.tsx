@@ -48,7 +48,7 @@ function ProfileButton({ onClick }: ProfileButtonProps) {
                 />
             </DropdownTrigger>
             <DropdownMenu variant="accent">
-                <Button variant="primary" onClick={handleGoProfile}>
+                <Button variant="primary" onClick={handleGoProfile} data-testid="profile-button-navigation">
                     {t("components.profile_button.profile")}
                 </Button>
                 <LoadingButton
@@ -57,6 +57,9 @@ function ProfileButton({ onClick }: ProfileButtonProps) {
                     variant="danger"
                     onClick={handleLogout}
                     className="whitespace-nowrap"
+                    data-testid="logout-button-navigation"
+                    disabled={isLoading}
+                    aria-label="Cerrar sesión"
                 >
                     {t("components.profile_button.logout")}
                 </LoadingButton>

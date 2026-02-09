@@ -68,14 +68,6 @@ export const Dropdown = ({
 
     useEffect(() => {
         setIsOpen(false);
-
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape") setIsOpen(false);
-            console.log("Rendering close");
-        };
-        document.addEventListener("keydown", handleKeyDown);
-
-        return () => document.addEventListener("keydown", handleKeyDown);
     }, [pathname]);
 
     useEffect(() => {
