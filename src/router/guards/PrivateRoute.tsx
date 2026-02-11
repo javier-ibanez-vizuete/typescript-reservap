@@ -6,7 +6,8 @@ export function PrivateRoute() {
 
     if (!user) {
         console.warn("Intentando acceder a rutas privadas de usuario");
-        return <Navigate to={"/"} replace />;
+        // Añadit un state para redireccionar al menu despues del login
+        return <Navigate to={"login"} replace />;
     }
 
     return <Outlet />;
