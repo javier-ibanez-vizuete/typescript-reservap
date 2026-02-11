@@ -2,7 +2,8 @@
 
 // Some utilities are currently unused; they belong to my personal storage toolkit for general project use.
 
-import type { DataType, KeyType } from "../types/helper.type";
+import type { DataType, KeyType } from "../types/index.type";
+
 
 export const getDataFromStorage = (key: KeyType): DataType => {
     const data = localStorage.getItem(key);
