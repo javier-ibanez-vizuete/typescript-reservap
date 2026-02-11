@@ -14,9 +14,10 @@ import { PrivateRoute } from "./router/guards/PrivateRoute";
 
 export function App() {
     console.log("Render App");
+
     useEffect(() => {
         // loginApi({ email: "user@user.com", password: "useruser" });
-    });
+    }, []);
 
     return (
         <Routes>

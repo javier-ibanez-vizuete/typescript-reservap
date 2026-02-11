@@ -62,6 +62,8 @@ export function MenuPage() {
         return products.filter(({ categories }) => categories.includes(selectedCategory));
     }, [selectedCategory, products]);
 
+    useEffect(() => {}, []);
+
     const hasData = products?.length > 0 && categories?.length > 0;
     useEffect(() => {
         if (!hasData) fetchAllProductsData();
