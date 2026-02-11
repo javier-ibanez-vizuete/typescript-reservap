@@ -24,10 +24,11 @@ export const ProductsProvider = ({ children }: ProductsProviderProps) => {
 
     useEffect(() => {
         const productsFromStorage = getProductsFromLocalStorage();
-        if (productsFromStorage) setProducts(productsFromStorage);
+        if (productsFromStorage) setProducts(productsFromStorage as Product[]);
 
         const productsCategoriesFromStorage = getProductsCategoriesFromLocalStorage();
-        if (productsCategoriesFromStorage) setProductsCategories(productsCategoriesFromStorage);
+        if (productsCategoriesFromStorage)
+            setProductsCategories(productsCategoriesFromStorage as ProductsCategories[]);
     }, []);
 
     const contextValue = useMemo(

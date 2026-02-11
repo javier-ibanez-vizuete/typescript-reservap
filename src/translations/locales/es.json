@@ -1,203 +1,200 @@
 {
-    "app": {},
-    "components": {
-        "profile_button": {
-            "profile": "Perfil",
-            "logout": "Cerrar sesión",
-            "loggin_out": "Cerrando sesión"
-        },
-        "form_component": {
-            "reset_button": "Limpiar Formulario"
-        }
+  "app": {},
+  "components": {
+    "profile_button": {
+      "profile": "Perfil",
+      "logout": "Cerrar sesión",
+      "loggin_out": "Cerrando sesión"
     },
-    "navbar": {
-        "navbar_links": {
-            "menu": "Menu",
-            "orders": "Pedidos",
-            "cart": "Carrito",
-            "bookings": "Reservas"
-        },
-        "login_button": "Iniciar Sesion",
-        "register_button": "Registrarse"
-    },
-    "pages": {
-        "register_page": {
-            "title": "Registrarse",
-
-            "register_button": "Registrarse",
-            "register_button_loading": "Registrando",
-
-            "label_name": "Nombre Completo",
-            "label_email": "Correo Electronico",
-            "label_password": "Contraseña",
-            "label_repassword": "Repetir Contraseña",
-            "label_address": "Dirección",
-            "label_phone": "Teléfono",
-
-            "placeholder_input_name": "Tony Stark",
-            "placeholder_input_email": "tuamigoyvecino@spiderman.com",
-            "placeholder_input_password": "Noteladigo19",
-            "placeholder_input_repassword": "Noteladigo19",
-            "placeholder_input_address": "La calle de la ruina, 23",
-            "placeholder_input_phone": "Numero Español (612385478)",
-
-            "validations_messages": {
-                "name": "El campo nombre es obligatorio",
-                "email": "El campo email es obligatorio",
-                "password": "El campo contraseña es obligatorio",
-                "repassword": "Las Contraseñas no coinciden",
-                "address": "El campo direccion es obligatorio",
-                "phone": "El campo Telefono es obligatorio",
-
-                "min_name": "Nombre demasiado corto (min. 4 Caracteres)",
-                "max_name": "Nombre demasiado largo (max. 30 Caracteres)",
-                "min_email": "Email demasiado corto (min. 5 Caracteres)",
-                "max_email": "Email demasiado largo (max. 50 Caracteres)",
-                "min_password": "Contraseña demasiado corta (min. 8 Caracteres)",
-                "max_password": "Contraseña demasiado larga (max. 30 Caracteres)",
-                "min_address": "Dirección demasiado corta (min. 8 Caracteres)",
-                "max_address": "Dirección demasiado larga (max. 50 Caracteres)",
-                "min_phone": "Número demasiado corto (min. 9 Digitos)",
-                "max_phone": "Número demasiado largo (max. 9 Digitos)",
-
-                "invalid_field": "Caracteres introducidos no validos.",
-                "invalid_password": "La contraseña debe contener al menos 'Mayuscula, Minuscula y numero'"
-            }
-        },
-        "login_page": {
-            "title": "Iniciar Sesion",
-
-            "login_button": "Iniciar Sesion",
-            "login_button_loading": "Iniciando sesion",
-
-            "label_email": "Correo Electronico",
-            "label_password": "Contraseña",
-
-            "placeholder_input_email": "tuamigoyvecino@spiderman.com",
-            "placeholder_input_password": "Noteladigo19",
-
-            "validations_messages": {
-                "email": "El campo email es obligatorio",
-                "password": "El campo contraseña es obligatorio",
-
-                "min_email": "Email demasiado corto (min. 5 Caracteres)",
-                "max_email": "Email demasiado largo (max. 50 Caracteres)",
-                "min_password": "Contraseña demasiado corta (min. 8 Caracteres)",
-                "max_password": "Contraseña demasiado larga (max. 30 Caracteres)",
-
-                "invalid_field": "Caracteres introducidos no validos.",
-                "invalid_password": "La contraseña debe contener al menos 'Mayuscula, Minuscula y numero'"
-            },
-
-            "toasts": {
-                "login_successfully": "Sesión iniciada correctamente",
-                "login_error": "Fallo en el inicio de sesion"
-            }
-        },
-        "home_page": {
-            "title": "Pagina Principal",
-            "cta_data": {
-                "login": {
-                    "title": "Bienvenido de nuevo",
-                    "description": "Inicia sesión para gestionar tus pedidos y reservas.",
-                    "button_text": "Iniciar sesión"
-                },
-                "menu": {
-                    "title": "Consulta nuestro Menú",
-                    "description": "Explora nuestra selección completa de platos y bebidas.",
-                    "button_text": "Ver menú"
-                },
-                "bookings": {
-                    "title": "Reserva tu mesa",
-                    "description": "Elige tu fecha y hora, y guardaremos tu sitio.",
-                    "button_text": "Reservar ahora"
-                },
-                "orders": {
-                    "title": "¿Tienes hambre?",
-                    "description": "Disfruta de nuestros mejores platos desde casa.",
-                    "button_text": "Pedir ahora"
-                }
-            }
-        }
-    },
-    "products": {
-        "product_coke_name": "Coca-Cola",
-        "product_coke_description": "Botella de Coca-Cola servida con hielo y una rodaja de lima.",
-        "product_orange_fanta_name": "Fanta Naranja",
-        "product_orange_fanta_description": "Botella de Fanta Naranja servida con hielo y una rodaja de naranja.",
-        "product_mineral_water_name": "Agua mineral",
-        "product_mineral_water_description": "Botella de agua mineral servida con hielo.",
-        "product_sparkling_water_name": "Agua con gas",
-        "product_sparkling_water_description": "Botella de agua con gas servida con hielo y una rodaja de lima.",
-        "product_beer_name": "Cerveza Fuller's",
-        "product_beer_description": "Medio pinta de nuestra ale premium (Fuller's).",
-        "product_orange_juice_name": "Zumo de naranja natural",
-        "product_orange_juice_description": "Un vaso de zumo de naranja recién exprimido",
-        "product_lemon_fanta_name": "Fanta Limón",
-        "product_lemon_fanta_description": "Botella de Fanta Limón servida con hielo y una rodaja de limón.",
-        "product_red_wine_name": "Copa de vino tinto",
-        "product_red_wine_description": "Nuestro vino tinto de la casa.",
-        "product_white_wine_name": "Copa de vino blanco",
-        "product_white_wine_description": "Nuestro vino blanco de la casa",
-        "product_coffee_name": "Espresso",
-        "product_coffee_description": "Nuestro espresso hecho con los mejores granos arábica.",
-        "product_toast_name": "Tostada con tomate",
-        "product_toast_description": "Pan tostado con tomate, ajo y nuestro mejor aceite de oliva español.",
-        "product_cheese_name": "Tabla de quesos",
-        "product_cheese_description": "Nuestra mejor selección de quesos nacionales con acompañamientos.",
-        "product_croquettes_name": "Croquetas de jamón",
-        "product_croquettes_description": "Las mejores croquetas caseras de jamón que hemos hecho.",
-        "product_iberian_ham_name": "Jamón ibérico",
-        "product_iberian_ham_description": "100 g de nuestro mejor jamón ibérico 5J, cortado a mano.",
-        "product_bravas_name": "Patatas bravas",
-        "product_bravas_description": "Nuestras patatas cuidadosamente seleccionadas y la mejor salsa brava del mundo.",
-        "product_mixed_salad_name": "Ensalada tradicional",
-        "product_mixed_salad_description": "Un bol de lechuga, tomate, cebolla y aceitunas. Puede servirse con aliño.",
-        "product_classic_burger_name": "Hamburguesa de ternera",
-        "product_classic_burger_description": "La hamburguesa número uno con nuestro mejor queso cheddar, tomate y lechuga.",
-        "product_pork_steak_sirloin_name": "Solomillo ibérico",
-        "product_pork_steak_sirloin_description": "Solomillo de cerdo a la parrilla servido con nuestra mejor salsa de menta.",
-        "product_risotto_name": "Risotto de boletus",
-        "product_risotto_description": "El risotto más cremoso que hemos hecho, servido con láminas de boletus.",
-        "product_veggie_burger_name": "Hamburguesa vegetal",
-        "product_veggie_burger_description": "Una jugosa hamburguesa vegetal hecha de remolacha, proteína de guisante, zanahoria y manzana, servida en un bollo de brioche suave con cebolla roja y lechuga crujiente.",
-        "product_steak_tartare_name": "Steak tartar",
-        "product_steak_tartare_description": "Steak tartar servido con yema de huevo y ahumado con madera de chocolate.",
-        "product_takos_name": "Tacos de pollo",
-        "product_takos_description": "Tacos de pollo marinado servidos con salsa picante y pico de gallo fresco.",
-        "product_roast_chicken_name": "Pollo asado",
-        "product_roast_chicken_description": "Nuestro mejor pollo asado servido con nuestra salsa artesana de limón y pimienta.",
-        "product_carbonara_name": "Espagueti carbonara",
-        "product_carbonara_description": "Espagueti fresco hecho con nuestra salsa carbonara tradicional.",
-        "product_paella_name": "Paella de mariscos",
-        "product_paella_description": "Una paella española tradicional servida con variedad de mariscos",
-        "product_calamari_name": "Calamares fritos",
-        "product_calamari_description": "Aros de calamar rebozados, servidos con una rodaja de limón.",
-        "product_soup_name": "Sopa de jamón ibérico",
-        "product_soup_description": "Nuestra sopa casera servida con un huevo duro y jamón ibérico.",
-        "product_mussels_mariniere_name": "Mejillones a la marinera",
-        "product_mussels_mariniere_description": "Mejillones cocinados en nuestra salsa marinera casera.",
-        "product_pizza_name": "Pizza Margherita",
-        "product_pizza_description": "Nuestra base de pizza casera con tomate, mozzarella fresca y albahaca.",
-        "product_lasagna_name": "Lasaña a la boloñesa",
-        "product_lasagna_description": "Nuestra lasaña casera hecha con salsa boloñesa y bechamel.",
-        "product_salmon_name": "Salmón a la parrilla",
-        "product_salmon_description": "Un filete de salmón fresco a la parrilla servido con nuestra cremosa crema de calabaza.",
-        "product_entrecote_beef_name": "Entrecot de ternera",
-        "product_entrecote_beef_description": "Entrecot a la parrilla y salado",
-        "product_french_fries_name": "Guarnición de patatas fritas",
-        "product_french_fries_description": "Una guarnición salada de nuestras mejores patatas fritas",
-        "product_garlic_bread_name": "Pan de ajo",
-        "product_garlic_bread_description": "Rebanadas de nuestro pan con mantequilla, crujientes y con ajo.",
-        "product_egg_flan_name": "Flan",
-        "product_egg_flan_description": "Flan casero servido con nuestro caramelo líquido artesano y la clásica galleta napolitana.",
-        "product_crema_catalana_name": "Crema catalana",
-        "product_crema_catalana_description": "Nuestro postre tradicional español servido con azúcar caramelizada.",
-        "product_panna_cotta_name": "Panna cotta",
-        "product_panna_cotta_description": "Panna cotta casera servida con coulis de frutos rojos.",
-        "product_cheesecake_name": "Tarta de queso",
-        "product_cheesecake_description": "Nuestra cremosa tarta de queso casera servida con mermelada de arándanos",
-        "product_brownie_name": "Brownie de chocolate",
-        "product_brownie_description": "Nuestro brownie artesano y perfectamente horneado con helado artesano de vainilla."
+    "form_component": {
+      "reset_button": "Limpiar Formulario"
     }
+  },
+  "navbar": {
+    "navbar_links": {
+      "menu": "Menu",
+      "orders": "Pedidos",
+      "cart": "Carrito",
+      "bookings": "Reservas"
+    },
+    "login_button": "Iniciar Sesion",
+    "register_button": "Registrarse"
+  },
+  "pages": {
+    "register_page": {
+      "title": "Registrarse",
+      "register_button": "Registrarse",
+      "register_button_loading": "Registrando",
+      "label_name": "Nombre Completo",
+      "label_email": "Correo Electronico",
+      "label_password": "Contraseña",
+      "label_repassword": "Repetir Contraseña",
+      "label_address": "Dirección",
+      "label_phone": "Teléfono",
+      "placeholder_input_name": "Tony Stark",
+      "placeholder_input_email": "tuamigoyvecino@spiderman.com",
+      "placeholder_input_password": "Noteladigo19",
+      "placeholder_input_repassword": "Noteladigo19",
+      "placeholder_input_address": "La calle de la ruina, 23",
+      "placeholder_input_phone": "Numero Español (612385478)",
+      "validations_messages": {
+        "name": "El campo nombre es obligatorio",
+        "email": "El campo email es obligatorio",
+        "password": "El campo contraseña es obligatorio",
+        "repassword": "Las Contraseñas no coinciden",
+        "address": "El campo direccion es obligatorio",
+        "phone": "El campo Telefono es obligatorio",
+        "min_name": "Nombre demasiado corto (min. 4 Caracteres)",
+        "max_name": "Nombre demasiado largo (max. 30 Caracteres)",
+        "min_email": "Email demasiado corto (min. 5 Caracteres)",
+        "max_email": "Email demasiado largo (max. 50 Caracteres)",
+        "min_password": "Contraseña demasiado corta (min. 8 Caracteres)",
+        "max_password": "Contraseña demasiado larga (max. 30 Caracteres)",
+        "min_address": "Dirección demasiado corta (min. 8 Caracteres)",
+        "max_address": "Dirección demasiado larga (max. 50 Caracteres)",
+        "min_phone": "Número demasiado corto (min. 9 Digitos)",
+        "max_phone": "Número demasiado largo (max. 9 Digitos)",
+        "invalid_field": "Caracteres introducidos no validos.",
+        "invalid_password": "La contraseña debe contener al menos 'Mayuscula, Minuscula y numero'"
+      }
+    },
+    "login_page": {
+      "title": "Iniciar Sesion",
+      "login_button": "Iniciar Sesion",
+      "login_button_loading": "Iniciando sesion",
+      "label_email": "Correo Electronico",
+      "label_password": "Contraseña",
+      "placeholder_input_email": "tuamigoyvecino@spiderman.com",
+      "placeholder_input_password": "Noteladigo19",
+      "validations_messages": {
+        "email": "El campo email es obligatorio",
+        "password": "El campo contraseña es obligatorio",
+        "min_email": "Email demasiado corto (min. 5 Caracteres)",
+        "max_email": "Email demasiado largo (max. 50 Caracteres)",
+        "min_password": "Contraseña demasiado corta (min. 8 Caracteres)",
+        "max_password": "Contraseña demasiado larga (max. 30 Caracteres)",
+        "invalid_field": "Caracteres introducidos no validos.",
+        "invalid_password": "La contraseña debe contener al menos 'Mayuscula, Minuscula y numero'"
+      },
+      "toasts": {
+        "login_successfully": "Sesión iniciada correctamente",
+        "login_error": "Fallo en el inicio de sesion"
+      }
+    },
+    "home_page": {
+      "title": "Pagina Principal",
+      "cta_data": {
+        "login": {
+          "title": "Bienvenido de nuevo",
+          "description": "Inicia sesión para gestionar tus pedidos y reservas.",
+          "button_text": "Iniciar sesión"
+        },
+        "menu": {
+          "title": "Consulta nuestro Menú",
+          "description": "Explora nuestra selección completa de platos y bebidas.",
+          "button_text": "Ver menú"
+        },
+        "bookings": {
+          "title": "Reserva tu mesa",
+          "description": "Elige tu fecha y hora, y guardaremos tu sitio.",
+          "button_text": "Reservar ahora"
+        },
+        "orders": {
+          "title": "¿Tienes hambre?",
+          "description": "Disfruta de nuestros mejores platos desde casa.",
+          "button_text": "Pedir ahora"
+        }
+      }
+    },
+    "no_content_page": {
+      "home_button": "Ir a Inicio"
+    },
+    "menu_page": {
+      "title": "MENU",
+      "clear_filter": "Borrar Filtro",
+      "categories": "Categorias",
+      "error_content": "Error Cargando Productos",
+      "error_text_button": "Reintentar"
+    }
+  },
+  "products": {
+    "product_coke_name": "Coca-Cola",
+    "product_coke_description": "Botella de Coca-Cola servida con hielo y una rodaja de lima.",
+    "product_orange_fanta_name": "Fanta Naranja",
+    "product_orange_fanta_description": "Botella de Fanta Naranja servida con hielo y una rodaja de naranja.",
+    "product_mineral_water_name": "Agua mineral",
+    "product_mineral_water_description": "Botella de agua mineral servida con hielo.",
+    "product_sparkling_water_name": "Agua con gas",
+    "product_sparkling_water_description": "Botella de agua con gas servida con hielo y una rodaja de lima.",
+    "product_beer_name": "Cerveza Fuller's",
+    "product_beer_description": "Medio pinta de nuestra ale premium (Fuller's).",
+    "product_orange_juice_name": "Zumo de naranja natural",
+    "product_orange_juice_description": "Un vaso de zumo de naranja recién exprimido",
+    "product_lemon_fanta_name": "Fanta Limón",
+    "product_lemon_fanta_description": "Botella de Fanta Limón servida con hielo y una rodaja de limón.",
+    "product_red_wine_name": "Copa de vino tinto",
+    "product_red_wine_description": "Nuestro vino tinto de la casa.",
+    "product_white_wine_name": "Copa de vino blanco",
+    "product_white_wine_description": "Nuestro vino blanco de la casa",
+    "product_coffee_name": "Espresso",
+    "product_coffee_description": "Nuestro espresso hecho con los mejores granos arábica.",
+    "product_toast_name": "Tostada con tomate",
+    "product_toast_description": "Pan tostado con tomate, ajo y nuestro mejor aceite de oliva español.",
+    "product_cheese_name": "Tabla de quesos",
+    "product_cheese_description": "Nuestra mejor selección de quesos nacionales con acompañamientos.",
+    "product_croquettes_name": "Croquetas de jamón",
+    "product_croquettes_description": "Las mejores croquetas caseras de jamón que hemos hecho.",
+    "product_iberian_ham_name": "Jamón ibérico",
+    "product_iberian_ham_description": "100 g de nuestro mejor jamón ibérico 5J, cortado a mano.",
+    "product_bravas_name": "Patatas bravas",
+    "product_bravas_description": "Nuestras patatas cuidadosamente seleccionadas y la mejor salsa brava del mundo.",
+    "product_mixed_salad_name": "Ensalada tradicional",
+    "product_mixed_salad_description": "Un bol de lechuga, tomate, cebolla y aceitunas. Puede servirse con aliño.",
+    "product_classic_burger_name": "Hamburguesa de ternera",
+    "product_classic_burger_description": "La hamburguesa número uno con nuestro mejor queso cheddar, tomate y lechuga.",
+    "product_pork_steak_sirloin_name": "Solomillo ibérico",
+    "product_pork_steak_sirloin_description": "Solomillo de cerdo a la parrilla servido con nuestra mejor salsa de menta.",
+    "product_risotto_name": "Risotto de boletus",
+    "product_risotto_description": "El risotto más cremoso que hemos hecho, servido con láminas de boletus.",
+    "product_veggie_burger_name": "Hamburguesa vegetal",
+    "product_veggie_burger_description": "Una jugosa hamburguesa vegetal hecha de remolacha, proteína de guisante, zanahoria y manzana, servida en un bollo de brioche suave con cebolla roja y lechuga crujiente.",
+    "product_steak_tartare_name": "Steak tartar",
+    "product_steak_tartare_description": "Steak tartar servido con yema de huevo y ahumado con madera de chocolate.",
+    "product_takos_name": "Tacos de pollo",
+    "product_takos_description": "Tacos de pollo marinado servidos con salsa picante y pico de gallo fresco.",
+    "product_roast_chicken_name": "Pollo asado",
+    "product_roast_chicken_description": "Nuestro mejor pollo asado servido con nuestra salsa artesana de limón y pimienta.",
+    "product_carbonara_name": "Espagueti carbonara",
+    "product_carbonara_description": "Espagueti fresco hecho con nuestra salsa carbonara tradicional.",
+    "product_paella_name": "Paella de mariscos",
+    "product_paella_description": "Una paella española tradicional servida con variedad de mariscos",
+    "product_calamari_name": "Calamares fritos",
+    "product_calamari_description": "Aros de calamar rebozados, servidos con una rodaja de limón.",
+    "product_soup_name": "Sopa de jamón ibérico",
+    "product_soup_description": "Nuestra sopa casera servida con un huevo duro y jamón ibérico.",
+    "product_mussels_mariniere_name": "Mejillones a la marinera",
+    "product_mussels_mariniere_description": "Mejillones cocinados en nuestra salsa marinera casera.",
+    "product_pizza_name": "Pizza Margherita",
+    "product_pizza_description": "Nuestra base de pizza casera con tomate, mozzarella fresca y albahaca.",
+    "product_lasagna_name": "Lasaña a la boloñesa",
+    "product_lasagna_description": "Nuestra lasaña casera hecha con salsa boloñesa y bechamel.",
+    "product_salmon_name": "Salmón a la parrilla",
+    "product_salmon_description": "Un filete de salmón fresco a la parrilla servido con nuestra cremosa crema de calabaza.",
+    "product_entrecote_beef_name": "Entrecot de ternera",
+    "product_entrecote_beef_description": "Entrecot a la parrilla y salado",
+    "product_french_fries_name": "Guarnición de patatas fritas",
+    "product_french_fries_description": "Una guarnición salada de nuestras mejores patatas fritas",
+    "product_garlic_bread_name": "Pan de ajo",
+    "product_garlic_bread_description": "Rebanadas de nuestro pan con mantequilla, crujientes y con ajo.",
+    "product_egg_flan_name": "Flan",
+    "product_egg_flan_description": "Flan casero servido con nuestro caramelo líquido artesano y la clásica galleta napolitana.",
+    "product_crema_catalana_name": "Crema catalana",
+    "product_crema_catalana_description": "Nuestro postre tradicional español servido con azúcar caramelizada.",
+    "product_panna_cotta_name": "Panna cotta",
+    "product_panna_cotta_description": "Panna cotta casera servida con coulis de frutos rojos.",
+    "product_cheesecake_name": "Tarta de queso",
+    "product_cheesecake_description": "Nuestra cremosa tarta de queso casera servida con mermelada de arándanos",
+    "product_brownie_name": "Brownie de chocolate",
+    "product_brownie_description": "Nuestro brownie artesano y perfectamente horneado con helado artesano de vainilla."
+  }
 }
