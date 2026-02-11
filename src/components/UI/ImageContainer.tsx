@@ -9,7 +9,7 @@ export type ImageContainerProps = {
     title?: string;
 } & HTMLAttributes<HTMLPictureElement>;
 
-const baseImageContainerConfig = "flex justify-center items-center";
+const baseImageContainerConfig = "flex justify-center items-center overflow-hidden";
 
 function ImageContainer({ children, className = "", size, onClick, title, ...props }: ImageContainerProps) {
     const currentImageContainerConfig = useMemo(

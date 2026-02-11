@@ -5,6 +5,7 @@ import { App } from "./App.tsx";
 
 import { ToastContainer } from "./components/Toasts/ToastContainer.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
+import { ProductsProvider } from "./contexts/ProductsContext.js";
 import { ThemeProvider } from "./contexts/ThemeContext.tsx";
 import { ToastsProvider } from "./contexts/ToastsContext.tsx";
 import "./index.css";
@@ -16,8 +17,10 @@ createRoot(document.getElementById("root")!).render(
             <ToastsProvider>
                 <AuthProvider>
                     <ThemeProvider>
-                        <App />
-                        <ToastContainer />
+                        <ProductsProvider>
+                            <App />
+                            <ToastContainer />
+                        </ProductsProvider>
                     </ThemeProvider>
                 </AuthProvider>
             </ToastsProvider>
